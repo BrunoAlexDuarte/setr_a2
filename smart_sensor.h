@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+
+#define SUCCESS 0
 
 /*
  * As mensagens começam por # e acabam em !
@@ -20,19 +23,19 @@
 
 /* # A CS ! */
     //- Dados de todos os sensores
-lont int read_value_sensor_all(); //Command A 
+uint16_t read_value_sensor_all(); //Command A 
 				  //
 /* # P S CS ! */ // S - indica o sensor que queremos ler
     //- Dados de somente um sensor
-long int read_value_sensor(long int sensor); //Command P 
+uint16_t read_value_sensor(uint16_t sensor); //Command P 
 					     //
 /* # L CS ! */ //
     //- Dados de todos os sensores, últimos 20
-long int show_samples(); //Command L
+uint16_t show_samples(); //Command L
 			 //
 /* # R CS ! */
     //- Reseta o histórico
-long int reset_history(); //Comand R
+uint16_t reset_history(); //Comand R
 
 #endif
 
