@@ -37,5 +37,14 @@ uint16_t show_samples(); //Command L
     //- Reseta o histórico
 uint16_t reset_history(); //Comand R
 
+uint16_t read_value_sensor_all();
+uint16_t generate_temp();
+uint16_t generate_humidity();
+uint16_t generate_co2();
+uint16_t send_sensor_temp();
+uint16_t send_sensor_humidity();
+uint16_t send_sensor_co2();
+
+
 #endif
 

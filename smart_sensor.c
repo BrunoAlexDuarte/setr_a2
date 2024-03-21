@@ -36,12 +36,54 @@ uint16_t send_number(uint16_t number) {
 
 uint16_t read_value_sensor_all() {
 
-	//Generate values for all sensores
+	send_char('#');
+	send_char('A');
+	send_char('R');
 	//Sends values by order (temperature, humidity, CO2)
+	send_sensor_temp();
+	send_sensor_humidity();
+	send_sensor_co2();
+	send_char('!');
 
 	return SUCCESS;
 }
 
+uint16_t send_sensor_temp() {
+	uint16_t value_temp = generate_temp();
+	if (value_temp <= 50) {
+		send_char('-');
+		value_temp = 50 - value_temp;
+		send_number(value_temp);
+	} else {
+		send_char('+');
+		value_temp = value_temp - 50;
+		send_number(value_temp);
+	}
+	return SUCCESS;
+}
 
+uint16_t send_sensor_humidity() {
+	uint16_t value_humidity = generate_humidity();
+	send_char('+');
+	send_number(value_humidity);
+	return SUCCESS;
+}
+
+uint16_t send_sensor_co2() {
+	uint16_t value_co2 = generate_co2();
+	send_char('+');
+	send_number(value_co2);
+	return SUCCESS;
+}
+
+uint16_t generate_temp() {
+	return 70;
+}
+uint16_t generate_humidity() {
+	return 5;
+}
+uint16_t generate_co2() {
+	return 4000;
+}
 
 //EOF
