@@ -9,6 +9,15 @@
 
 // Criar função para ler os valores de ascci e passar os mesmos para inteiros
 
+static uint16_t temps[SENSOR_CACHE_SIZE];
+static uint16_t temp_last = 0;
+
+static uint16_t humidities[SENSOR_CACHE_SIZE];
+static uint16_t humidity_last = 0;
+
+static uint16_t co2levels[SENSOR_CACHE_SIZE];
+static uint16_t co2levels_last = 0;
+
 uint16_t send_char(unsigned char c) {
 	//COLOCAR AQUI VERIFICACAO SE E DE FACTO UMA LETRA; NUMERO OU SINAL;
 	printf("%c",c);
@@ -34,6 +43,7 @@ uint16_t send_number(uint16_t number) {
 	return SUCCESS;
 }
 
+
 uint16_t read_value_sensor_all() {
 
 	send_char('#');
@@ -46,6 +56,23 @@ uint16_t read_value_sensor_all() {
 	send_char('!');
 
 	return SUCCESS;
+}
+
+uint16_t read_value_sensor(unsigned char sensor) {
+	
+	if (sensor == 'T') {
+		send_sensor_temp();
+		return SUCCESS;
+	}
+	if (sensor == 'H') {
+		send_sensor_humidity();
+		return SUCCESS;
+	}
+	if (sensor == 'C') {
+		send_sensor_co2();
+		return SUCCESS;
+	}
+	return NO_SENSOR;
 }
 
 uint16_t send_sensor_temp() {
@@ -77,13 +104,34 @@ uint16_t send_sensor_co2() {
 }
 
 uint16_t generate_temp() {
-	return 70;
+	uint16_t value = 70;
+	temps[temp_last++] = value;
+	temp_last %= SENSOR_CACHE_SIZE;
+	return value;
 }
 uint16_t generate_humidity() {
-	return 5;
+	uint16_t value = 5;
+	humidities[humidity_last++] = value;
+	humidity_last %= SENSOR_CACHE_SIZE;
+	return value;
 }
 uint16_t generate_co2() {
-	return 4000;
+	uint16_t value = 4000;
+	co2levels[co2levels_last++] = value;
+	co2levels_last %= SENSOR_CACHE_SIZE;
+	return value;
 }
 
+uint16_t show_temps() {
+	printf("Temps[0]:%d, [1]:%d\n", temps[0], temps[1]);
+	return SUCCESS;
+}
+
+uint16_t show_humidities() {
+	return SUCCESS;
+}
+
+uint16_t show_co2levels() {
+	return SUCCESS;
+}
 //EOF

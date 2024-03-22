@@ -6,6 +6,8 @@
 #include <stdint.h>
 
 #define SUCCESS 0
+#define NO_SENSOR 1
+#define SENSOR_CACHE_SIZE 20
 
 /*
  * As mensagens começam por # e acabam em !
@@ -27,7 +29,7 @@ uint16_t read_value_sensor_all(); //Command A
 				  //
 /* # P S CS ! */ // S - indica o sensor que queremos ler
     //- Dados de somente um sensor
-uint16_t read_value_sensor(uint16_t sensor); //Command P 
+uint16_t read_value_sensor(unsigned char sensor); //Command P 
 					     //
 /* # L CS ! */ //
     //- Dados de todos os sensores, últimos 20
@@ -44,7 +46,7 @@ uint16_t generate_co2();
 uint16_t send_sensor_temp();
 uint16_t send_sensor_humidity();
 uint16_t send_sensor_co2();
-
+uint16_t show_temps();
 
 #endif
 
