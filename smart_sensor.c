@@ -11,16 +11,19 @@
 
 static uint16_t temps[SENSOR_CACHE_SIZE];
 static uint16_t temp_last = 0;
+static uint16_t more_20_temps = 0;
 
 static uint16_t humidities[SENSOR_CACHE_SIZE];
 static uint16_t humidity_last = 0;
+static uint16_t more_20_humidities = 0;
 
 static uint16_t co2levels[SENSOR_CACHE_SIZE];
 static uint16_t co2levels_last = 0;
+static uint16_t more_20_co2s = 0;
 
 uint16_t send_char(unsigned char c) {
 	//COLOCAR AQUI VERIFICACAO SE E DE FACTO UMA LETRA; NUMERO OU SINAL;
-	printf("%c",c);
+	putchar(c);
 	return SUCCESS;
 }
 
@@ -75,6 +78,13 @@ uint16_t read_value_sensor(unsigned char sensor) {
 	return NO_SENSOR;
 }
 
+uint16_t send_last_20_samples(unsigned char sensor) {
+
+
+
+	return NO_SENSOR;
+}
+
 uint16_t send_sensor_temp() {
 	uint16_t value_temp = generate_temp();
 	if (value_temp <= 50) {
@@ -107,18 +117,21 @@ uint16_t generate_temp() {
 	uint16_t value = 70;
 	temps[temp_last++] = value;
 	temp_last %= SENSOR_CACHE_SIZE;
+	if (temp_last > 20) more_20_temps = 1;
 	return value;
 }
 uint16_t generate_humidity() {
 	uint16_t value = 5;
 	humidities[humidity_last++] = value;
 	humidity_last %= SENSOR_CACHE_SIZE;
+	if (humidity_last > 20) more_20_humidities = 1;
 	return value;
 }
 uint16_t generate_co2() {
 	uint16_t value = 4000;
 	co2levels[co2levels_last++] = value;
 	co2levels_last %= SENSOR_CACHE_SIZE;
+	if (co2levels_last > 20) more_20_co2s = 1;
 	return value;
 }
 
