@@ -1,13 +1,10 @@
 #ifndef __SMART_SENSOR_H__
 #define __SMART_SENSOR_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "temperature.h"
+#include "humidity.h"
+#include "co2levels.h"
 
-#define SUCCESS 0
-#define NO_SENSOR 1
-#define SENSOR_CACHE_SIZE 20
 
 /*
  * As mensagens começam por # e acabam em !
@@ -37,16 +34,17 @@ uint16_t show_samples(); //Command L
 			 //
 /* # R CS ! */
     //- Reseta o histórico
-uint16_t reset_history(); //Comand R
+uint16_t reset_history_all(); //Comand R
+uint16_t reset_history(unsigned char sensor); //Comand R
 
 uint16_t read_value_sensor_all();
-uint16_t generate_temp();
-uint16_t generate_humidity();
-uint16_t generate_co2();
-uint16_t send_sensor_temp();
-uint16_t send_sensor_humidity();
-uint16_t send_sensor_co2();
-uint16_t show_temps();
+
+
+
+uint16_t send_last_20_samples(unsigned char sensor);
+uint16_t send_last_20_samples_all();
+
+
 
 #endif
 
