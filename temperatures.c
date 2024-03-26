@@ -39,7 +39,7 @@ uint16_t generate_temp() {
 	uint16_t value = 30;
 	temps[temp_last++] = value;
 	temp_last %= SENSOR_CACHE_SIZE;
-	if (temp_last > 20) more_20_temps = 1;
+	if (temp_last == SENSOR_CACHE_SIZE - 1) more_20_temps = 1;
 	return value;
 }
 uint16_t check_temps() {

@@ -32,7 +32,7 @@ uint16_t generate_humidity() {
 	uint16_t value = 5;
 	humidities[humidity_last++] = value;
 	humidity_last %= SENSOR_CACHE_SIZE;
-	if (humidity_last > 20) more_20_humidities = 1;
+	if (humidity_last == SENSOR_CACHE_SIZE-1) more_20_humidities = 1;
 	return value;
 }
 

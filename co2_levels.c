@@ -32,7 +32,7 @@ uint16_t generate_co2() {
 	uint16_t value = 4000;
 	co2levels[co2levels_last++] = value;
 	co2levels_last %= SENSOR_CACHE_SIZE;
-	if (co2levels_last > 20) more_20_co2s = 1;
+	if (co2levels_last == SENSOR_CACHE_SIZE - 1) more_20_co2s = 1;
 	return value;
 }
 

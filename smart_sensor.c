@@ -93,6 +93,7 @@ uint16_t send_last_20_samples_all() {
 		send_char('!');
 		return SUCCESS;
 	}
+	printf("FAILURE: %d %d %d\n", check_temps(), check_humidities(), check_co2levels());
 	return NOT_TWENTY_ENTRIES;
 }
 
