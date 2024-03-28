@@ -1,39 +1,73 @@
 #include "UART.h"
 
-static unsigned char buffer[BUFFER_SIZE];
-static uint16_t occupied_bytes = 0;
+static unsigned char RxBuffer[BUFFER_SIZE];
+static uint16_t rx_occupied_bytes = 0;
+static unsigned char TxBuffer[BUFFER_SIZE];
+static uint16_t tx_occupied_bytes = 0;
 static regex_t regex;
 static char* command_pattern = "^#[APLR].*(2[0-5][0-9]|[0-1][0-9]{2})!$";
 
 uint16_t receive_byte(unsigned char input) {
 
-    if(occupied_bytes < BUFFER_SIZE) {
+    if(rx_occupied_bytes < BUFFER_SIZE) {
 
-        if(input == '#') {
-            clear_buffer();
+        if(input == SOF_SYM) {
+            clear_rx_buffer();
         }
-        buffer[occupied_bytes] = input;
-        occupied_bytes++;
+        RxBuffer[rx_occupied_bytes] = input;
+        rx_occupied_bytes++;
 
-        if(input == '!') {
+        if(input == EOF_SYM) {
             //get command in buffer
-            char command[occupied_bytes+1];
-            strncpy(command, buffer, occupied_bytes);
-            command[occupied_bytes] = '\0'; //null-terminate the string;
+            char command[rx_occupied_bytes+1];
+            strncpy(command, RxBuffer, rx_occupied_bytes);
+            command[rx_occupied_bytes] = '\0'; //null-terminate the string;
             if(validate_command(command) && validate_checksum(command)) {
                 // ------ usar o comando
                 // switch bla bla bla
-                clear_buffer();
+                clear_rx_buffer();
                 return FULL_COMMAND_RECEIVED;
             }
-            clear_buffer();
+            clear_rx_buffer();
             return INVALID_COMMAND;
         }
 
         return BYTE_ADDED_TO_BUFFER;
     }
 
-    clear_buffer();
+    clear_rx_buffer();
+    return BUFFER_FULLY_OCCUPIED;
+}
+
+uint16_t send_byte(unsigned char input) {
+
+    if(tx_occupied_bytes < BUFFER_SIZE) {
+
+        if(input == SOF_SYM) {
+            clear_tx_buffer();
+        }
+        TxBuffer[tx_occupied_bytes] = input;
+        tx_occupied_bytes++;
+
+        if(input == EOF_SYM) {
+            //get command in buffer
+            char command[tx_occupied_bytes+1];
+            strncpy(command, RxBuffer, tx_occupied_bytes);
+            command[tx_occupied_bytes] = '\0'; //null-terminate the string;
+            if(validate_command(command)) { // talvez nao seja preciso fazer o checksum (?)
+                // ------ usar o comando
+                // switch bla bla bla
+                clear_tx_buffer();
+                return FULL_COMMAND_RECEIVED;
+            }
+            clear_tx_buffer();
+            return INVALID_COMMAND;
+        }
+
+        return BYTE_ADDED_TO_BUFFER;
+    }
+
+    clear_tx_buffer();
     return BUFFER_FULLY_OCCUPIED;
 }
 
@@ -57,9 +91,9 @@ uint16_t validate_command(char *command) {
 uint16_t validate_checksum(char *command) {
     
     uint16_t start_commandsum = 1;
-    uint16_t end_commandsum = occupied_bytes - 5;
-    uint16_t start_checksum = occupied_bytes - 4;
-    uint16_t end_checksum = occupied_bytes - 2;
+    uint16_t end_commandsum = rx_occupied_bytes - 5;
+    uint16_t start_checksum = rx_occupied_bytes - 4;
+    uint16_t end_checksum = rx_occupied_bytes - 2;
 
     uint16_t checksum = 0;
     uint16_t i = start_checksum;
@@ -81,6 +115,10 @@ uint16_t validate_checksum(char *command) {
 
 }
 
-void clear_buffer() {
-    occupied_bytes = 0;
+void clear_rx_buffer() {
+    rx_occupied_bytes = 0;
+}
+
+void clear_tx_buffer() {
+    tx_occupied_bytes = 0;
 }
