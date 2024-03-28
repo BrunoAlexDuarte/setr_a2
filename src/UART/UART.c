@@ -111,7 +111,7 @@ uint16_t validate_checksum(char *command) {
     if(commandsum == checksum) {
         return CHECKSUM_MATCH;
     }
-    return CHECKSUM_MISSMATCH;
+    return CHECKSUM_MISMATCH;
 
 }
 
