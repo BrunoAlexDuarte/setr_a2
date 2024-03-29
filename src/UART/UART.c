@@ -22,21 +22,34 @@ uint16_t receive_byte(unsigned char input) {
             char command[rx_occupied_bytes+1];
             strncpy(command, RxBuffer, rx_occupied_bytes);
             command[rx_occupied_bytes] = '\0'; //null-terminate the string;
-            if(validate_command(command) && validate_checksum(command)) {
-                // ------ usar o comando
-                // switch bla bla bla
+            uint16_t res = validate_command(command);
+            if(validate_command(command)==0 && validate_checksum(command)==0) {
+                switch(command[1]) {
+                    case 'A':
+                        printf("TO DO\n");
+                        break;
+                    case 'P':
+                        printf("TO DO\n");
+                        break;
+                    case 'L':
+                        printf("TO DO\n");
+                        break;
+                    case 'R':
+                        printf("TO DO\n");
+                        break;
+                    default:
+                        return INVALID_COMMAND;
+                }
                 clear_rx_buffer();
                 return FULL_COMMAND_RECEIVED;
             }
             clear_rx_buffer();
             return INVALID_COMMAND;
         }
-
         return BYTE_ADDED_TO_BUFFER;
     }
-
     clear_rx_buffer();
-    return BUFFER_FULLY_OCCUPIED;
+    receive_byte(input);
 }
 
 uint16_t send_byte(unsigned char input) {
@@ -54,9 +67,14 @@ uint16_t send_byte(unsigned char input) {
             char command[tx_occupied_bytes+1];
             strncpy(command, RxBuffer, tx_occupied_bytes);
             command[tx_occupied_bytes] = '\0'; //null-terminate the string;
-            if(validate_command(command)) { // talvez nao seja preciso fazer o checksum (?)
-                // ------ usar o comando
-                // switch bla bla bla
+            if(validate_command(command)==0) { // talvez nao seja preciso fazer o checksum (?)
+                switch(command[1]) {
+                    case 'X':
+                        printf("TO DO\n");
+                        break;
+                    default:
+                        return INVALID_COMMAND;
+                }
                 clear_tx_buffer();
                 return FULL_COMMAND_RECEIVED;
             }
@@ -68,7 +86,7 @@ uint16_t send_byte(unsigned char input) {
     }
 
     clear_tx_buffer();
-    return BUFFER_FULLY_OCCUPIED;
+    send_byte(input);
 }
 
 uint16_t validate_command(char *command) {
@@ -117,8 +135,19 @@ uint16_t validate_checksum(char *command) {
 
 void clear_rx_buffer() {
     rx_occupied_bytes = 0;
+    return;
 }
 
 void clear_tx_buffer() {
     tx_occupied_bytes = 0;
+    return;
+}
+
+//debug
+void PrintRxBuffer() {
+    printf("RxBuffer:");
+    for(uint16_t i = 0; i < rx_occupied_bytes; i++) {
+        printf("%c,", RxBuffer[i]);
+    }
+    printf("\n");
 }

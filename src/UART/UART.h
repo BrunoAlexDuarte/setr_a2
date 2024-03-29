@@ -30,7 +30,6 @@
 #define CHECKSUM_MISMATCH 2
 #define REGEX_COMPILE_FAIL 3
 #define REGEX_MATCH_FAIL 4
-#define BUFFER_FULLY_OCCUPIED 5
 #define BUFFER_SIZE 20
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'         /* End of Frame Symbol */
@@ -46,7 +45,6 @@
  *         FULL_COMMAND_RECEIVED - the added character completes a valid command.
  *         BYTE_ADDED_TO_BUFFER - bytes is added to the buffer successfully.
  *         INVALID_COMMAND - the added character creates an invalid command.
- *         BUFFER_FULLY_OCCUPIED - buffer is already full.
  *
  * @note This function is a placeholder for receiving data in a simulated environment.
  *       The actual implementation may vary depending on the application and hardware.
@@ -65,7 +63,6 @@ uint16_t receive_byte(unsigned char input);
  *         FULL_COMMAND_RECEIVED - the added character completes a valid command.
  *         BYTE_ADDED_TO_BUFFER - bytes is added to the buffer successfully.
  *         INVALID_COMMAND - the added character creates an invalid command.
- *         BUFFER_FULLY_OCCUPIED - buffer is already full.
  *
  * @note This function is a placeholder for sending data in a simulated environment.
  *       The actual implementation may vary depending on the application and hardware.
@@ -141,6 +138,9 @@ void clear_rx_buffer();
  *       or interfere with the intended operation of the application.
  */
 void clear_tx_buffer();
+
+//debug
+void PrintRxBuffer();
 
 
 #endif
