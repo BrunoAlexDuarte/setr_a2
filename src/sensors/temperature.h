@@ -1,12 +1,12 @@
 /** 
  * @file temperature.h
  * @brief This file contains the functions relative to the temperature sensor
- * All the responses will be in ASCII.
+ * all the responses will be in ascii.
  *
- * @author Bruno Duarte
+ * @author bruno duarte
  *
  * @date 02-03-2024
- * @bug No bugs to report for now
+ * @bug no bugs to report for now
  *
  */
 
@@ -48,7 +48,7 @@ uint16_t read_sensor_temp();
 uint16_t send_temp(uint16_t value_temp);
 
 /**
- * @brief Sends the history of the lat 20 temperature values.
+ * @brief Sends the history of the last 20 temperature values.
  *
  * This function sends the last 20 values, if they exist, otherwise it returns a error.
  * 
@@ -57,7 +57,25 @@ uint16_t send_temp(uint16_t value_temp);
  *
  */
 uint16_t send_last_20_temps();
+
+/**
+ * @brief Cheks if there are more than 20 entries in the temperature sensor history
+ *
+ * This function sees if there are more than 20 entries in the history
+ * 
+ * @return Returns a uint16_t that is 1 if there are more than 20 entries and 0 otherwise
+ *
+ */
 uint16_t check_temps();
+
+/**
+ * @brief Resets the saved temperatures in the history.
+ *
+ * This function resets the history of saved temperatures.
+ * 
+ * @return Returns a uint16_t that is SUCESS(0) if nothing fails, nothing should fail.
+ *
+ */
 uint16_t reset_temps();
 uint16_t show_temps();
 
