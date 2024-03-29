@@ -22,7 +22,6 @@ uint16_t receive_byte(unsigned char input) {
             char command[rx_occupied_bytes+1];
             strncpy(command, RxBuffer, rx_occupied_bytes);
             command[rx_occupied_bytes] = '\0'; //null-terminate the string;
-            uint16_t res = validate_command(command);
             if(validate_command(command)==0 && validate_checksum(command)==0) {
                 switch(command[1]) {
                     case 'A':
