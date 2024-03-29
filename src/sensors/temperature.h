@@ -10,7 +10,7 @@
  *
  */
 
-ifndef __TEMPERATURE_H__
+#ifndef __TEMPERATURE_H__
 #define __TEMPERATURE_H__
 
 #include "common_funcs.h"

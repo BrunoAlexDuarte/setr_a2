@@ -1,9 +1,9 @@
 # Set the source files that make up the library
 set(SENSORS_SRCS
    common_funcs.h common_funcs.c
-   co2levels.h co2_levels.c
-   humidity.h humidities.c
-   temperature.h temperatures.c
+   co2_levels.h co2_levels.c
+   humidity.h humidity.c
+   temperature.h temperature.c
    smart_sensor.h smart_sensor.c
 )
 
