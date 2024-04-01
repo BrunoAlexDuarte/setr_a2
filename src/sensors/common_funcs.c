@@ -2,7 +2,8 @@
 
 uint16_t send_char(unsigned char c) {
 	//COLOCAR AQUI VERIFICACAO SE E DE FACTO UMA LETRA; NUMERO OU SINAL;
-	putchar(c);
+//	putchar(c);
+	send_byte(c);
 	return SUCCESS;
 }
 
