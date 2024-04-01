@@ -1,4 +1,5 @@
 #include "UART.h"
+#include "../sensors/smart_sensor.h"
 
 static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
@@ -25,16 +26,23 @@ uint16_t receive_byte(unsigned char input) {
             if(validate_command(command)==0 && validate_checksum(command)==0) {
                 switch(command[1]) {
                     case 'A':
-                        printf("TO DO\n");
+			read_value_sensor_all();
                         break;
                     case 'P':
-                        printf("TO DO\n");
+			unsigned char sensor2 = 'A'; //TODO
+			read_value_sensor(sensor2);
                         break;
                     case 'L':
-                        printf("TO DO\n");
+			unsigned char sensor3 = 'A'; //TODO
+			send_last_20_samples(sensor3);
+			//OR
+			send_last_20_samples_all();
                         break;
                     case 'R':
-                        printf("TO DO\n");
+			unsigned char sensor4 = 'A'; //TODO
+			reset_history(sensor4);
+			//OR
+			reset_history_all();
                         break;
                     default:
                         return INVALID_COMMAND;
