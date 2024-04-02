@@ -31,6 +31,7 @@
 #define CHECKSUM_MISMATCH 2
 #define REGEX_COMPILE_FAIL 3
 #define REGEX_MATCH_FAIL 4
+#define UNKNOWN_SENSOR 5
 #define BUFFER_SIZE 20
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'         /* End of Frame Symbol */

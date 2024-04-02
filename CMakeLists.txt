@@ -33,6 +33,7 @@ endif()
 # CMake will look for a CMakeLists.txt in that folder and will process it
 add_subdirectory(src/sensors)
 add_subdirectory(src/UART)
+add_subdirectory(unity_src)
 
 # Generate executable "libdemo" from source file "main.c"
 add_executable(libdemo src/main.c)
@@ -45,6 +46,9 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/src/sensors")
 
 list(APPEND EXTRA_LIBS UARTLib)
 list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/src/UART")
+
+list(APPEND EXTRA_LIBS UnityLib)
+list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/unity_src")
 
 # Specify libraries or flags to use when linking a given target 
 # and/or its dependents
