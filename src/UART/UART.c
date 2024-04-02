@@ -7,6 +7,10 @@ static uint16_t tx_occupied_bytes = 0;
 static regex_t regex;
 static char* command_pattern = "^#[APLR].*(2[0-5][0-9]|[0-1][0-9]{2})!$";
 
+uint16_t check_sensor_identifier(unsigned char c) {
+	return c == 'T' || c == 'H' || c == 'C';
+}
+
 uint16_t receive_byte(unsigned char input) {
 
     if(rx_occupied_bytes < BUFFER_SIZE) {
@@ -28,20 +32,18 @@ uint16_t receive_byte(unsigned char input) {
 			read_value_sensor_all();
                         break;
                     case 'P':
-			unsigned char sensor2 = 'A'; //TODO
-			read_value_sensor(sensor2);
+			if(!check_sensor_identifier(command[2])) {
+				printf("A error ocurred while reading the sensor for this command!");
+			}
+			read_value_sensor(command[2]);
                         break;
                     case 'L':
-			unsigned char sensor3 = 'A'; //TODO
-			send_last_20_samples(sensor3);
-			//OR
-			send_last_20_samples_all();
+			if(!check_sensor_identifier(command[2])) send_last_20_samples_all();
+			else send_last_20_samples(command[2]);
                         break;
                     case 'R':
-			unsigned char sensor4 = 'A'; //TODO
-			reset_history(sensor4);
-			//OR
-			reset_history_all();
+			if(!check_sensor_identifier(command[2])) reset_history(command[2]);
+			else reset_history_all();
                         break;
                     default:
                         return INVALID_COMMAND;
