@@ -11,6 +11,14 @@ uint16_t check_sensor_identifier(unsigned char c) {
 	return c == 'T' || c == 'H' || c == 'C';
 }
 
+uint16_t calculate_checksum() {
+	uint16_t sum = 0;
+	for(uint16_t i = 0; i < tx_occupied_bytes; i++) {
+		sum = (sum + TxBuffer[i]) % 256;
+	}
+	return sum;
+}
+
 uint16_t receive_byte(unsigned char input) {
 
     if(rx_occupied_bytes < BUFFER_SIZE) {

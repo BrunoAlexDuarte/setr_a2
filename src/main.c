@@ -12,7 +12,7 @@ int main() {
 	PrintRxBuffer();
 	receive_byte('1');
 	PrintRxBuffer();
-	receive_byte('3');
+	receive_byte('#');
 	PrintRxBuffer();
 	receive_byte('0');
 	PrintRxBuffer();
