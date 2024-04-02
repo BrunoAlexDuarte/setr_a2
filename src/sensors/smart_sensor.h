@@ -26,7 +26,6 @@
  * o CMD e DATA
  * */
 
-
 /**
  * @brief Reads a value from all the sensors
  *

@@ -21,6 +21,7 @@
 #include <regex.h>
 #include <string.h>
 #include <stdlib.h>
+#include "../sensors/smart_sensor.h"
 
 #define CHECKSUM_MATCH 0
 #define VALID_COMMAND 0

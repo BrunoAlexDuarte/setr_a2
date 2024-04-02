@@ -1,5 +1,4 @@
 #include "UART.h"
-#include "../sensors/smart_sensor.h"
 
 static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
@@ -157,4 +156,8 @@ void PrintRxBuffer() {
         printf("%c,", RxBuffer[i]);
     }
     printf("\n");
+}
+
+unsigned char *returnRxBuffer() {
+	return RxBuffer;
 }
