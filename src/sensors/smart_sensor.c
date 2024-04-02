@@ -97,7 +97,7 @@ uint16_t send_last_20_samples_all() {
 	return NOT_TWENTY_ENTRIES;
 }
 
-uint16_t reset_history_sensor(unsigned char sensor) {
+uint16_t reset_history(unsigned char sensor) {
 	if (sensor == 'T') {
 		reset_temps();
 	} else if (sensor == 'H') {

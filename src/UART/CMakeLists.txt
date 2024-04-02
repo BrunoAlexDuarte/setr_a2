@@ -8,3 +8,6 @@ SET (LIB_TYPE STATIC)
 
 # Create the library
 add_library (UARTLib ${LIB_TYPE} ${UART_SRCS})
+
+list(APPEND EXTRA_LIBS1 SensorsLib)
+target_link_libraries(UARTLib PRIVATE ${EXTRA_LIBS1})
