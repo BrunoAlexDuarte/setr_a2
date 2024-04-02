@@ -15,7 +15,7 @@ uint16_t send_last_20_temps() {
 	}
 	for (uint16_t i = 0; i < 20; i++) {
 		send_temp(temps[i]);
-		send_char('|');
+		send_byte('|');
 	}
 	return SUCCESS;
 }
@@ -28,11 +28,11 @@ uint16_t read_sensor_temp() {
 
 uint16_t send_temp(uint16_t value_temp) {
 	if (value_temp <= 50) {
-		send_char('-');
+		send_byte('-');
 		value_temp = 50 - value_temp;
 		send_number(value_temp);
 	} else {
-		send_char('+');
+		send_byte('+');
 		value_temp = value_temp - 50;
 		send_number(value_temp);
 	}

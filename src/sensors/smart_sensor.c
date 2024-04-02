@@ -9,16 +9,16 @@
 
 uint16_t read_value_sensor_all() {
 
-	send_char('#');
-	send_char('A');
-	send_char('R');
+	send_byte('#');
+	send_byte('A');
+	send_byte('R');
 	//Sends values by order (temperature, humidity, CO2)
 	read_sensor_temp();
-	send_char('>');
+	send_byte('>');
 	read_sensor_humidity();
-	send_char('>');
+	send_byte('>');
 	read_sensor_co2();
-	send_char('!');
+	send_byte('!');
 
 	return SUCCESS;
 }
@@ -26,27 +26,27 @@ uint16_t read_value_sensor_all() {
 uint16_t read_value_sensor(unsigned char sensor) {
 	
 	if (sensor == 'T') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		read_sensor_temp();
-		send_char('!');
+		send_byte('!');
 		return SUCCESS;
 	}
 	if (sensor == 'H') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		read_sensor_humidity();
-		send_char('!');
+		send_byte('!');
 		return SUCCESS;
 	}
 	if (sensor == 'C') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		read_sensor_co2();
-		send_char('!');
+		send_byte('!');
 		return SUCCESS;
 	}
 	return NO_SENSOR;
@@ -57,23 +57,23 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 	uint16_t *samples;
 	uint16_t more_20 = 0;
 	if (sensor == 'T') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		send_last_20_temps();
-		send_char('!');
+		send_byte('!');
 	} else if (sensor == 'H') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		send_last_20_humidities();
-		send_char('!');
+		send_byte('!');
 	} else if (sensor == 'C') {
-		send_char('#');
-		send_char('P');
-		send_char('R');
+		send_byte('#');
+		send_byte('P');
+		send_byte('R');
 		send_last_20_co2levels();
-		send_char('!');
+		send_byte('!');
 	} else return NO_SENSOR;
 	
 	return SUCCESS;
@@ -82,15 +82,15 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 uint16_t send_last_20_samples_all() {
 
 	if (check_temps() && check_humidities() && check_co2levels()) {
-		send_char('#');
-		send_char('L');
-		send_char('R');
+		send_byte('#');
+		send_byte('L');
+		send_byte('R');
 		send_last_20_temps();
-		send_char('>');
+		send_byte('>');
 		send_last_20_humidities();
-		send_char('>');
+		send_byte('>');
 		send_last_20_co2levels();
-		send_char('!');
+		send_byte('!');
 		return SUCCESS;
 	}
 	printf("FAILURE: %d %d %d\n", check_temps(), check_humidities(), check_co2levels());

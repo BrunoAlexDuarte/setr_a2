@@ -15,7 +15,7 @@ uint16_t send_last_20_humidities() {
 	}
 	for (uint16_t i = 0; i < 20; i++) {
 		send_humidity(humidities[i]);
-		send_char('|');
+		send_byte('|');
 	}
 	return SUCCESS;
 }
@@ -27,7 +27,7 @@ uint16_t read_sensor_humidity() {
 }
 
 uint16_t send_humidity(uint16_t value_humidity) {
-	send_char('+');
+	send_byte('+');
 	send_number(value_humidity);
 	return SUCCESS;
 }

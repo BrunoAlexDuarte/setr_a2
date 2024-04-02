@@ -4,7 +4,7 @@
 #include <stdio.h>
 //#include <stdlib.h>
 #include <stdint.h>
-//#include "../UART/UART.h"
+#include "../UART/UART.h"
 
 #define SUCCESS 0
 #define NO_SENSOR 1
@@ -13,8 +13,6 @@
 #define SENSOR_CACHE_SIZE 20
 #define NUM_SAMPLES 40
 
-
-uint16_t send_char(unsigned char c);
 uint16_t send_number(uint16_t number);
 
 #endif
