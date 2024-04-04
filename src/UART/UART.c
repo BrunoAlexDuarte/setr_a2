@@ -2,21 +2,12 @@
 
 static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
-static unsigned char TxBuffer[BUFFER_SIZE];
-static uint16_t tx_occupied_bytes = 0;
+
 static regex_t regex;
 static char* command_pattern = "^#[APLR].*(2[0-5][0-9]|[0-1][0-9]{2})!$";
 
 uint16_t check_sensor_identifier(unsigned char c) {
 	return c == 'T' || c == 'H' || c == 'C';
-}
-
-uint16_t calculate_checksum() {
-	uint16_t sum = 0;
-	for(uint16_t i = 0; i < tx_occupied_bytes; i++) {
-		sum = (sum + TxBuffer[i]) % 256;
-	}
-	return sum;
 }
 
 uint16_t receive_byte(unsigned char input) {
@@ -68,42 +59,6 @@ uint16_t receive_byte(unsigned char input) {
     receive_byte(input);
 }
 
-uint16_t send_byte(unsigned char input) {
-
-    if(tx_occupied_bytes < BUFFER_SIZE) {
-
-        if(input == SOF_SYM) {
-            clear_tx_buffer();
-        }
-        TxBuffer[tx_occupied_bytes] = input;
-        tx_occupied_bytes++;
-
-        if(input == EOF_SYM) {
-            //get command in buffer
-            char command[tx_occupied_bytes+1];
-            strncpy(command, RxBuffer, tx_occupied_bytes);
-            command[tx_occupied_bytes] = '\0'; //null-terminate the string;
-            if(validate_command(command)==0) { // talvez nao seja preciso fazer o checksum (?)
-                switch(command[1]) {
-                    case 'X':
-                        printf("TO DO\n");
-                        break;
-                    default:
-                        return INVALID_COMMAND;
-                }
-                clear_tx_buffer();
-                return FULL_COMMAND_RECEIVED;
-            }
-            clear_tx_buffer();
-            return INVALID_COMMAND;
-        }
-
-        return BYTE_ADDED_TO_BUFFER;
-    }
-
-    clear_tx_buffer();
-    send_byte(input);
-}
 
 uint16_t validate_command(char *command) {
     
@@ -151,11 +106,6 @@ uint16_t validate_checksum(char *command) {
 
 void clear_rx_buffer() {
     rx_occupied_bytes = 0;
-    return;
-}
-
-void clear_tx_buffer() {
-    tx_occupied_bytes = 0;
     return;
 }
 
