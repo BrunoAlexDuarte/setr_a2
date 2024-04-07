@@ -25,6 +25,10 @@ uint16_t receive_byte(unsigned char input) {
             char command[rx_occupied_bytes+1];
             strncpy(command, RxBuffer, rx_occupied_bytes);
             command[rx_occupied_bytes] = '\0'; //null-terminate the string;
+	    printf("O comando :%s\n", command);
+	    int res = validate_checksum(command);
+	    printf("O resultado e:%d\n", res);
+	    validate_checksum2(command);
             if(validate_command(command)==0 && validate_checksum(command)==0) {
                 switch(command[1]) {
                     case 'A':
@@ -51,12 +55,16 @@ uint16_t receive_byte(unsigned char input) {
                 return FULL_COMMAND_RECEIVED;
             }
             clear_rx_buffer();
+	    printf("invalido\n");
+	    printf("invalido:%d\n", validate_checksum(command));
+	    printf("invalido:%d\n", validate_command(command));
             return INVALID_COMMAND;
         }
         return BYTE_ADDED_TO_BUFFER;
     }
     clear_rx_buffer();
     receive_byte(input);
+    return BYTE_ADDED_TO_BUFFER;
 }
 
 
@@ -77,6 +85,25 @@ uint16_t validate_command(char *command) {
 
 }
 
+
+uint16_t validate_checksum2(char *command) {
+	uint16_t last = rx_occupied_bytes - 2; //onde está o último digito
+	uint16_t checksum_num = 0;
+	uint16_t checksum = 0;
+	uint16_t multiplier = 1;
+	uint16_t i = last;
+
+	for (; i > 0; i--) {
+		if (!(command[i] <= '9' && command[i] >= '0')) break;
+		checksum_num = checksum_num + multiplier * (command[i]-'0');	
+		multiplier *= 10;
+	}
+	for(; i > 0; i--) {
+		checksum += command[i];
+	}
+	return checksum == checksum_num;
+}
+
 uint16_t validate_checksum(char *command) {
     
     uint16_t start_commandsum = 1;
@@ -88,14 +115,19 @@ uint16_t validate_checksum(char *command) {
     uint16_t i = start_checksum;
     while(i <= end_checksum) {
         checksum = checksum * 10 + (command[i] - '0');
+	//checksum = (checksum + command[i]) % 256;
         i++;
     }
 
     uint16_t commandsum = 0;
     for(i = start_commandsum; i <= end_commandsum; i++) {
+	printf("Adiciona:%d\n", command[i]);
+	printf("ola\n");
         commandsum += command[i];
         commandsum %= 256; // volta a 0 aos 255
     }
+    printf("Checksum:%d\n", checksum);
+    printf("Commandsum:%d\n", commandsum);
 
     if(commandsum == checksum) {
         return CHECKSUM_MATCH;

@@ -95,6 +95,7 @@ uint16_t validate_command(char *command);
  *       and the specific checksum calculation method used by the sender.
  */
 uint16_t validate_checksum(char *command);
+uint16_t validate_checksum2(char *command);
 
 /**
  * @brief Clear Receive Buffer
@@ -126,6 +127,7 @@ void clear_rx_buffer();
 
 //debug
 void PrintRxBuffer();
+unsigned char *returnRxBuffer();
 
 
 #endif
