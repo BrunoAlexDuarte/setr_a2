@@ -18,6 +18,9 @@ uint16_t read_value_sensor_all() {
 	read_sensor_humidity();
 	send_byte('>');
 	read_sensor_co2();
+	uint16_t checksum = calculate_checksum();
+	send_byte('|');
+	send_number(checksum);
 	send_byte('!');
 
 	return SUCCESS;
@@ -28,24 +31,33 @@ uint16_t read_value_sensor(unsigned char sensor) {
 	if (sensor == 'T') {
 		send_byte('#');
 		send_byte('P');
-		send_byte('R');
+		send_byte('T');
 		read_sensor_temp();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
 	}
 	if (sensor == 'H') {
 		send_byte('#');
 		send_byte('P');
-		send_byte('R');
+		send_byte('H');
 		read_sensor_humidity();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
 	}
 	if (sensor == 'C') {
 		send_byte('#');
 		send_byte('P');
-		send_byte('R');
+		send_byte('C');
 		read_sensor_co2();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
 	}
@@ -61,18 +73,27 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_byte('P');
 		send_byte('R');
 		send_last_20_temps();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'H') {
 		send_byte('#');
 		send_byte('P');
 		send_byte('R');
 		send_last_20_humidities();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'C') {
 		send_byte('#');
 		send_byte('P');
 		send_byte('R');
 		send_last_20_co2levels();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 	} else return NO_SENSOR;
 	
@@ -90,6 +111,9 @@ uint16_t send_last_20_samples_all() {
 		send_last_20_humidities();
 		send_byte('>');
 		send_last_20_co2levels();
+		uint16_t checksum = calculate_checksum();
+		send_byte('|');
+		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
 	}

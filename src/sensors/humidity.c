@@ -1,7 +1,7 @@
 
 #include "humidity.h"
 
-uint16_t humidities[SENSOR_CACHE_SIZE];
+uint16_t humidities[SENSOR_CACHE_SIZE+1];
 uint16_t humidity_last = 0;
 uint16_t more_20_humidities = 0;
 uint16_t all_humidities[NUM_SAMPLES] = { 64, 78, 50, 87, 62, 91, 23, 98, 41, 33, 40, 52,
@@ -21,7 +21,8 @@ uint16_t send_last_20_humidities() {
 }
 
 uint16_t read_sensor_humidity() {
-	uint16_t value_humidity = generate_humidity();
+	generate_humidity();
+	uint16_t value_humidity = humidities[humidity_last];
 	send_humidity(value_humidity);
 	return SUCCESS;
 }
@@ -33,7 +34,7 @@ uint16_t send_humidity(uint16_t value_humidity) {
 }
 
 uint16_t generate_humidity() {
-	humidities[humidity_last++] = all_humidities[humitidty_sample++];
+	humidities[++humidity_last] = all_humidities[humitidty_sample++];
 	humitidty_sample %= NUM_SAMPLES;
 	humidity_last %= SENSOR_CACHE_SIZE;
 	if (humidity_last == SENSOR_CACHE_SIZE-1) more_20_humidities = 1;
