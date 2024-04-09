@@ -35,27 +35,6 @@ uint16_t generate_co2();
  */
 uint16_t read_sensor_co2();
 
-/**
- * @brief Sends a CO2 levels value.
- *
- * This function defines how we send the value, in this case it is important because the
- * value could be negative.
- * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
- *
- */
-uint16_t send_co2(uint16_t value_co2);
-
-/**
- * @brief Sends the history of the last 20 CO2 levels values.
- *
- * This function sends the last 20 values, if they exist, otherwise it returns a error.
- * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, and NOT_TWENTY_ENTRIES(2) if 
- * there are not 20 entries
- *
- */
-uint16_t send_last_20_co2levels();
 
 /**
  * @brief Cheks if there are more than 20 entries in the CO2 levels sensor history

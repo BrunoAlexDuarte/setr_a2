@@ -34,28 +34,6 @@ uint16_t generate_humidity();
 uint16_t read_sensor_humidity();
 
 /**
- * @brief Sends a humidity value.
- *
- * This function defines how we send the value, in this case it is important because the
- * value could be negative.
- * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
- *
- */
-uint16_t send_humidity(uint16_t value_humidity);
-
-/**
- * @brief Sends the history of the last 20 humidity values.
- *
- * This function sends the last 20 values, if they exist, otherwise it returns a error.
- * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, and NOT_TWENTY_ENTRIES(2) if 
- * there are not 20 entries
- *
- */
-uint16_t send_last_20_humidities();
-
-/**
  * @brief Cheks if there are more than 20 entries in the humidity sensor history
  *
  * This function sees if there are more than 20 entries in the history

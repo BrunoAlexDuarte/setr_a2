@@ -157,6 +157,73 @@ void PrintRxBuffer();
 unsigned char *returnRxBuffer();
 uint16_t send_number(uint16_t number);
 
+/**
+ * @brief Sends a temperature value.
+ *
+ * This function defines how we send the value, in this case it is important because the
+ * value could be negative.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
+ *
+ */
+uint16_t send_temp(uint16_t value_temp);
+
+/**
+ * @brief Sends the history of the last 20 temperature values.
+ *
+ * This function sends the last 20 values, if they exist, otherwise it returns a error.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, and NOT_TWENTY_ENTRIES(2) if 
+ * there are not 20 entries
+ *
+ */
+uint16_t send_last_20_temps();
+
+/**
+ * @brief Sends a humidity value.
+ *
+ * This function defines how we send the value, in this case it is important because the
+ * value could be negative.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
+ *
+ */
+uint16_t send_humidity(uint16_t value_humidity);
+
+/**
+ * @brief Sends the history of the last 20 humidity values.
+ *
+ * This function sends the last 20 values, if they exist, otherwise it returns a error.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, and NOT_TWENTY_ENTRIES(2) if 
+ * there are not 20 entries
+ *
+ */
+uint16_t send_last_20_humidities();
+
+/**
+ * @brief Sends a CO2 levels value.
+ *
+ * This function defines how we send the value, in this case it is important because the
+ * value could be negative.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
+ *
+ */
+uint16_t send_co2(uint16_t value_co2);
+
+/**
+ * @brief Sends the history of the last 20 CO2 levels values.
+ *
+ * This function sends the last 20 values, if they exist, otherwise it returns a error.
+ * 
+ * @return Returns a uint16_t that is 0 in case of SUCESS, and NOT_TWENTY_ENTRIES(2) if 
+ * there are not 20 entries
+ *
+ */
+uint16_t send_last_20_co2levels();
+
+
 /*
  * As mensagens começam por # e acabam em !
  * Depois temos um byte para o comando CMD
@@ -249,5 +316,6 @@ uint16_t reset_history_all(); //Comand R
  *
  */
 uint16_t reset_history(unsigned char sensor); //Comand R
+
 
 #endif
