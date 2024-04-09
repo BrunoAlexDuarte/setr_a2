@@ -36,7 +36,7 @@ add_subdirectory(src/UART)
 add_subdirectory(unity_src)
 
 # Generate executable "libdemo" from source file "main.c"
-add_executable(libdemo src/main.c)
+add_executable(run_tests tests/testes.c)
 
 # Generate variables with set of libs and include folders
 # Dependencies for libraries files are automatically set 
@@ -52,15 +52,15 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/unity_src")
 
 # Specify libraries or flags to use when linking a given target 
 # and/or its dependents
-target_link_libraries(libdemo PUBLIC ${EXTRA_LIBS})
+target_link_libraries(run_tests PUBLIC ${EXTRA_LIBS})
 
 # Specifies include directories to use when compiling a given target
-target_include_directories(libdemo PUBLIC ${EXTRA_INCLUDES})
+target_include_directories(run_tests PUBLIC ${EXTRA_INCLUDES})
 
 # Set compiler options for module
 if(WARN_GENERATE_ERR)
 	message("-- Extra warnings and warnings treated as errors active")
-	target_compile_options(libdemo
+	target_compile_options(run_tests
 		PRIVATE
 		-Wall -Werror
 	)

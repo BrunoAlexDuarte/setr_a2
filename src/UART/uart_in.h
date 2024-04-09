@@ -13,10 +13,11 @@
  * @note This file is a simulation of UART functionality and does not interact with real hardware.
  */
 
-#ifndef __UART_H__
-#define __UART_H__
+#ifndef __UART_IN_H__
+#define __UART_IN_H__
 
-#include "uart_out.h"
+#include "uart_common.h"
+#include "../sensors/smart_sensor.h"
 
 
 /**

@@ -1,7 +1,8 @@
 
-#include "unity/src/unity.h"
-#include "../src/UART/UART.h"
-
+#include "../unity_src/unity.h"
+#include "../src/UART/uart_in.h"
+#include "../src/UART/uart_out.h"
+#include "../src/sensors/smart_sensor.h"
 
 void setUp(void) {}
 
@@ -91,7 +92,7 @@ void test_receive_message(void) {
 	receive_byte('7');
 	res = receive_byte('!');
 	printf("res: %d\n", res);
-	char *bytes = returnRxBuffer();
+	unsigned char *bytes = returnRxBuffer();
 	printf("buffer:%s\n", bytes);
 }
 
@@ -110,7 +111,7 @@ void test_receive_message2(void) {
 	receive_byte('5');
 	res = receive_byte('!');
 	printf("res: %d\n", res);
-	char *bytes = returnRxBuffer();
+	unsigned char *bytes = returnRxBuffer();
 	printf("buffer:%s\n", bytes);
 }
 
@@ -128,7 +129,7 @@ int main(void) {
 	RUN_TEST(test_generate_2_temps);
 	RUN_TEST(test_generate_2_humidities);
 	RUN_TEST(test_generate_2_co2levels);
-	char *buffer = returnTxBuffer();
+	unsigned char *buffer = returnTxBuffer();
 	printf("BUFFER FINAL:%s\n", buffer);
 	//RUN_TEST(test_send_number);
 

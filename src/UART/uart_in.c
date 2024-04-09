@@ -1,4 +1,4 @@
-#include "UART.h"
+#include "uart_in.h"
 
 static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
@@ -25,8 +25,6 @@ uint16_t receive_byte(unsigned char input) {
             char command[rx_occupied_bytes+1];
             strncpy(command, RxBuffer, rx_occupied_bytes);
             command[rx_occupied_bytes] = '\0'; //null-terminate the string;
-	    /*int res = validate_checksum(command);
-	    validate_checksum2(command);*/
             if(validate_command(command)==0 && validate_checksum(command)==0) {
                 switch(command[1]) {
                     case 'A':
@@ -53,7 +51,6 @@ uint16_t receive_byte(unsigned char input) {
                 return FULL_COMMAND_RECEIVED;
             }
             clear_rx_buffer();
-	    printf("invalido\n");
             return INVALID_COMMAND;
         }
         return BYTE_ADDED_TO_BUFFER;
@@ -81,47 +78,6 @@ uint16_t validate_command(char *command) {
 
 }
 
-/*uint16_t validate_command2(char *command) {
-	uint16_t last = rx_occupied_bytes - 1; //onde está o !
-	if (command[0] != '#' || command[last] != '!') return INVALID_COMMAND;
-	switch (command[1]) {
-		case 'P':
-			break;
-		case 'A':
-			break;
-		case 'L':
-			break;
-		case 'R':
-			break;
-		case 'M':
-			break;
-
-
-	}
-
-}
-
-
-uint16_t validate_checksum2(char *command) {
-	uint16_t last = rx_occupied_bytes - 2; //onde está o último digito
-	uint16_t checksum_num = 0;
-	uint16_t checksum = 0;
-	uint16_t multiplier = 1;
-	uint16_t i = last;
-
-	for (; i > 0; i--) {
-		if (!(command[i] <= '9' && command[i] >= '0')) break;
-		checksum_num = checksum_num + multiplier * (command[i]-'0');	
-		multiplier *= 10;
-	}
-	for(; i > 0; i--) {
-		checksum += command[i];
-	}
-	printf("CHECKSUM2:%d\n", checksum);
-	printf("CHECKSUM_NUM2:%d\n", checksum_num);
-	return checksum == checksum_num;
-}*/
-
 uint16_t validate_checksum(char *command) {
     
     uint16_t start_commandsum = 1;
@@ -143,9 +99,6 @@ uint16_t validate_checksum(char *command) {
         commandsum += command[i];
         commandsum %= 256; // volta a 0 aos 255
     }
-
-    printf("expected: %d", checksum);
-    printf("calculated: %d", commandsum);
 
     if(commandsum == checksum) {
         return CHECKSUM_MATCH;
