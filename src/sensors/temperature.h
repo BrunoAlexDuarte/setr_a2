@@ -78,5 +78,6 @@ uint16_t check_temps();
  */
 uint16_t reset_temps();
 uint16_t show_temps();
+uint16_t get_co2_history(uint16_t index, uint16_t *value);
 
 #endif

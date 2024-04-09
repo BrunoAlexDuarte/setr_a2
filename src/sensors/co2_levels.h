@@ -77,5 +77,6 @@ uint16_t check_co2levels();
  */
 uint16_t reset_co2levels();
 uint16_t show_co2levels();
+uint16_t get_temperature_history(uint16_t index, uint16_t *value);
 
 #endif

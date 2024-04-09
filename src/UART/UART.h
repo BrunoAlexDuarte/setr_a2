@@ -155,6 +155,7 @@ unsigned char *returnTxBuffer();
 //debug
 void PrintRxBuffer();
 unsigned char *returnRxBuffer();
+uint16_t send_number(uint16_t number);
 
 /*
  * As mensagens começam por # e acabam em !

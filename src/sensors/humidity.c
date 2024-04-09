@@ -19,7 +19,7 @@ uint16_t get_humidity_history(uint16_t index, uint16_t *value) {
 
 uint16_t read_sensor_humidity(uint16_t *value) {
 	generate_humidity();
-	value = humidities[humidity_last];
+	*value = humidities[humidity_last];
 	return SUCCESS;
 }
 

@@ -19,7 +19,7 @@ uint16_t get_temperature_history(uint16_t index, uint16_t *value) {
 
 uint16_t read_sensor_temp(uint16_t *value) {
 	generate_temp();
-	value = temps[temp_last];
+	*value = temps[temp_last];
 	return SUCCESS;
 }
 

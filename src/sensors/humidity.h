@@ -20,7 +20,7 @@
  * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
  *
  */
-uint16_t generate_humidity(
+uint16_t generate_humidity();
 
 /**
  * @brief Simulates the reading of a humidity value
@@ -30,7 +30,7 @@ uint16_t generate_humidity(
  * 
  * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
  *
- */);
+ */
 uint16_t read_sensor_humidity();
 
 /**
@@ -75,5 +75,6 @@ uint16_t check_humidities();
  */
 uint16_t reset_humidities();
 uint16_t show_humidities();
+uint16_t get_humidity_history(uint16_t index, uint16_t *value);
 
 #endif
