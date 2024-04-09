@@ -129,7 +129,40 @@ void test_receive_message2(void) {
 	printf("buffer:%s\n", bytes);
 }
 
+void test_get_20_temps(void) {
 
+	int res = 0;
+	res = receive_byte('#');
+	res = receive_byte('L');
+	res = receive_byte('T');
+	res = receive_byte('1');
+	res = receive_byte('6');
+	res = receive_byte('0');
+	res = receive_byte('!');
+	printf("RES:%d\n", res);
+	for (int i = 0; i < 20; i++) {
+		res = receive_byte('#');
+		res = receive_byte('P');
+		res = receive_byte('T');
+		res = receive_byte('1');
+		res = receive_byte('6');
+		res = receive_byte('4');
+		res = receive_byte('!');
+	}
+
+	res = receive_byte('#');
+	res = receive_byte('L');
+	res = receive_byte('T');
+	res = receive_byte('1');
+	res = receive_byte('6');
+	res = receive_byte('0');
+	res = receive_byte('!');
+	printf("RES FINAL:%d\n", res);
+	char *bytes = returnTxBuffer();
+	printf("buffer:%s\n", bytes);
+
+
+}
 
 int main(void) {
 
@@ -144,6 +177,7 @@ int main(void) {
 	//RUN_TEST(test_generate_2_humidities);
 	//RUN_TEST(test_generate_2_co2levels);
 	//RUN_TEST(test_send_number);
+	RUN_TEST(test_get_20_temps);
 
 
 	return 0;

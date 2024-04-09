@@ -28,21 +28,21 @@ uint16_t receive_byte(unsigned char input) {
             if(validate_command(command)==0 && validate_checksum(command, rx_occupied_bytes)==0) {
                 switch(command[1]) {
                     case 'A':
-			            read_value_sensor_all();
+			return read_value_sensor_all();
                         break;
                     case 'P':
                         if(!check_sensor_identifier(command[2])) {
                             return UNKNOWN_SENSOR;
                         }
-			            read_value_sensor(command[2]);
+			return read_value_sensor(command[2]);
                         break;
                     case 'L':
-                        if(!check_sensor_identifier(command[2])) send_last_20_samples_all();
-                        else send_last_20_samples(command[2]);
+                        if(!check_sensor_identifier(command[2])) return send_last_20_samples_all();
+                        else return send_last_20_samples(command[2]);
                         break;
                     case 'R':
-                        if(!check_sensor_identifier(command[2])) reset_history(command[2]);
-                        else reset_history_all();
+                        if(!check_sensor_identifier(command[2])) return reset_history(command[2]);
+                        else return reset_history_all();
                         break;
                     default:
                         return INVALID_COMMAND;

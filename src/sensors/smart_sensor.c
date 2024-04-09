@@ -69,6 +69,7 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 	uint16_t *samples;
 	uint16_t more_20 = 0;
 	if (sensor == 'T') {
+		if (!check_temps()) return NOT_TWENTY_ENTRIES;
 		send_byte('#');
 		send_byte('P');
 		send_byte('R');
@@ -78,6 +79,7 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'H') {
+		if (!check_humidities()) return NOT_TWENTY_ENTRIES;
 		send_byte('#');
 		send_byte('P');
 		send_byte('R');
@@ -87,6 +89,7 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'C') {
+		if (!check_co2levels()) return NOT_TWENTY_ENTRIES;
 		send_byte('#');
 		send_byte('P');
 		send_byte('R');

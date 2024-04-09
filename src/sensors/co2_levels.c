@@ -16,7 +16,7 @@ uint16_t send_last_20_co2levels() {
 	}
 	for (uint16_t i = 0; i < 20; i++) {
 		send_co2(co2levels[i]);
-		send_byte('|');
+		//send_byte('|');
 	}
 	return SUCCESS;
 }
