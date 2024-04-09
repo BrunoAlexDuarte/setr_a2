@@ -1,7 +1,6 @@
 
 #include "../unity_src/unity.h"
 #include "../src/UART/UART.h"
-#include "../src/sensors/smart_sensor.h"
 
 void test_total_get_20_and_reset_temps(void) {
 	int res = 0;

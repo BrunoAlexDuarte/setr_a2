@@ -1,7 +1,6 @@
 
 #include "../unity_src/unity.h"
 #include "../src/UART/UART.h"
-#include "../src/sensors/smart_sensor.h"
 
 void test_generate_all(void) {
 	int res = 0;
