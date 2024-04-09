@@ -4,7 +4,6 @@
 #include <stdio.h>
 //#include <stdlib.h>
 #include <stdint.h>
-#include "../UART/UART.h"
 
 #define SUCCESS 0
 #define NO_SENSOR 1

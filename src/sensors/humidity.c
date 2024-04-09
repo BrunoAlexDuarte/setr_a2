@@ -10,9 +10,9 @@ uint16_t all_humidities[NUM_SAMPLES] = { 64, 78, 50, 87, 62, 91, 23, 98, 41, 33,
 uint16_t humitidty_sample = 0;
 
 uint16_t get_humidity_history(uint16_t index, uint16_t *value) {
-	if (index <= SENSOR_CACHE_SIZE and !index) {
+	if (index <= SENSOR_CACHE_SIZE && !index) {
 		*value = humidities[index];
-		return SUCESS;
+		return SUCCESS;
 	}
 	return VALUE_NOT_AVAILABLE;
 }
@@ -20,7 +20,6 @@ uint16_t get_humidity_history(uint16_t index, uint16_t *value) {
 uint16_t read_sensor_humidity(uint16_t *value) {
 	generate_humidity();
 	value = humidities[humidity_last];
-	send_humidity(value_humidity);
 	return SUCCESS;
 }
 
