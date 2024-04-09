@@ -56,22 +56,18 @@ void test_send_number(void) {
 	
 	int res = 0;
 	res =  send_number(85);
-	PrintTxBuffer();
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	clear_tx_buffer();
 
 	res =  send_number(9);
-	PrintTxBuffer();
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	clear_tx_buffer();
 
 	res =  send_number(1002);
-	PrintTxBuffer();
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	clear_tx_buffer();
 
 	res =  send_number(22902);
-	PrintTxBuffer();
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	clear_tx_buffer();
 

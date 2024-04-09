@@ -40,8 +40,3 @@ uint16_t reset_humidities() {
 	more_20_humidities = 0;
 	return SUCCESS;
 }
-
-uint16_t show_humidities() {
-	return SUCCESS;
-}
-

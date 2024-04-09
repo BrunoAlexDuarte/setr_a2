@@ -19,7 +19,7 @@
  *
  * This function generates the value to simluate the reading of the sensor.
  * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
+ * @return Returns a uint16_t that is 0 in case of SUCCESS, although the function should never fail.
  *
  */
 uint16_t generate_co2();
@@ -30,7 +30,7 @@ uint16_t generate_co2();
  * This function calls the function to generate the value and then adds it to the 
  * history of the last 20 readings.
  * 
- * @return Returns a uint16_t that is 0 in case of SUCESS, although the function should never fail.
+ * @return Returns a uint16_t that is 0 in case of SUCCESS, although the function should never fail.
  *
  */
 uint16_t read_sensor_co2();
@@ -51,11 +51,23 @@ uint16_t check_co2levels();
  *
  * This function resets the history of saved CO2 levels.
  * 
- * @return Returns a uint16_t that is SUCESS(0) if nothing fails, nothing should fail.
+ * @return Returns a uint16_t that is SUCCESS(0) if nothing fails, nothing should fail.
  *
  */
 uint16_t reset_co2levels();
-uint16_t show_co2levels();
-uint16_t get_temperature_history(uint16_t index, uint16_t *value);
+
+/**
+ * @brief Reads a value from a specific index in the history
+ *
+ * This functions reads a value from the CO2 sensors history.
+ * 
+ * @param[in] index Index of the wanted value.
+ * @param[in] value Pointer to where the co2 history is being read to.
+ * 
+ * @return Returns a uint16_t that is SUCCESS(0) if nothing fails, and 
+ *      VALUE_NOT_AVAIABLE(3) if the index doesn't exist.
+ *
+ */
+uint16_t get_co2_history(uint16_t index, uint16_t *value);
 
 #endif

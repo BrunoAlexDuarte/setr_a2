@@ -42,8 +42,3 @@ uint16_t reset_co2levels() {
 	more_20_co2s = 0;
 	return SUCCESS;	
 }
-
-uint16_t show_co2levels() {
-	return SUCCESS;
-}
-

@@ -55,7 +55,19 @@ uint16_t check_temps();
  *
  */
 uint16_t reset_temps();
-uint16_t show_temps();
-uint16_t get_co2_history(uint16_t index, uint16_t *value);
+
+/**
+ * @brief Reads a value from a specific index in the history
+ *
+ * This functions reads a value from the temperature sensors history.
+ * 
+ * @param[in] index Index of the wanted value.
+ * @param[in] value Pointer to where the temperature history is being read to.
+ * 
+ * @return Returns a uint16_t that is SUCCESS(0) if nothing fails, and 
+ *      VALUE_NOT_AVAIABLE(3) if the index doesn't exist.
+ *
+ */
+uint16_t get_temperature_history(uint16_t index, uint16_t *value);
 
 #endif

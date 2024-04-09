@@ -8,7 +8,8 @@
  * @date 02-03-2024
  * @bug No bugs to report for now
  *
- */#ifndef __HUMIDITY_H__
+ */
+#ifndef __HUMIDITY_H__
 #define __HUMIDITY_H__
 
 #include "common_funcs.h"
@@ -52,7 +53,19 @@ uint16_t check_humidities();
  *
  */
 uint16_t reset_humidities();
-uint16_t show_humidities();
+
+/**
+ * @brief Reads a value from a specific index in the history
+ *
+ * This functions reads a value from the humidity sensors history.
+ * 
+ * @param[in] index Index of the wanted value.
+ * @param[in] value Pointer to where the humidity history is being read to.
+ * 
+ * @return Returns a uint16_t that is SUCCESS(0) if nothing fails, and 
+ *      VALUE_NOT_AVAIABLE(3) if the index doesn't exist.
+ *
+ */
 uint16_t get_humidity_history(uint16_t index, uint16_t *value);
 
 #endif

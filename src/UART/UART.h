@@ -49,7 +49,7 @@
  * @param[in] input The byte of data being added to the buffer.
  * 
  * @return Indicates the result of processing the byte.
- *         FULL_COMMAND_RECEIVED - the added character completes a valid command.
+ *         SUCCESS - there was a complete command in the buffer, and the action was completed successfully.
  *         BYTE_ADDED_TO_BUFFER - bytes is added to the buffer successfully.
  *         INVALID_COMMAND - the added character creates an invalid command.
  *
@@ -58,24 +58,6 @@
  *       It's expected to be replaced or customized to suit specific requirements.
  */
 uint16_t receive_byte(unsigned char input);
-
-/**
- * @brief Send Byte
- *
- * A byte of data (unsigned char) is added to the tx buffer and performs some processing.
- *
- * @param[in] input The byte of data being added to the buffer.
- * 
- * @return Indicates the result of processing the byte.
- *         FULL_COMMAND_RECEIVED - the added character completes a valid command.
- *         BYTE_ADDED_TO_BUFFER - bytes is added to the buffer successfully.
- *         INVALID_COMMAND - the added character creates an invalid command.
- *
- * @note This function is a placeholder for sending data in a simulated environment.
- *       The actual implementation may vary depending on the application and hardware.
- *       It's expected to be replaced or customized to suit specific requirements.
- */
-//uint16_t send_byte(unsigned char input);
 
 /**
  * @brief Validate Command
@@ -133,6 +115,39 @@ uint16_t validate_checksum(char *command, uint16_t rx_occupied_bytes);
 void clear_rx_buffer();
 
 /**
+ * @brief Calculate Checksum
+ *
+ * Calculate the checksum of the current uncomplete command in the TxBuffer to ensure data integrity.
+ *
+ * @return the calculated checksum. 
+ * 
+ * @note This function is responsible for verifying the integrity of the command data by validating its checksum.
+ *       The implementation typically involves computing the checksum of the command (excluding the checksum itself)
+ *       and comparing it with the checksum value provided within the command string.
+ *       It's essential to ensure that the checksum algorithm and validation logic align with the protocol requirements
+ *       and the specific checksum calculation method used by the sender.
+ */
+uint16_t calculate_checksum();
+
+/**
+ * @brief Send Byte
+ *
+ * A byte of data (unsigned char) is added to the tx buffer and performs some processing.
+ *
+ * @param[in] input The byte of data being added to the buffer.
+ * 
+ * @return Indicates the result of processing the byte.
+ *         FULL_COMMAND_RECEIVED - the added character completes a valid command.
+ *         BYTE_ADDED_TO_BUFFER - bytes is added to the buffer successfully.
+ *         INVALID_COMMAND - the added character creates an invalid command.
+ *
+ * @note This function is a placeholder for sending data in a simulated environment.
+ *       The actual implementation may vary depending on the application and hardware.
+ *       It's expected to be replaced or customized to suit specific requirements.
+ */
+uint16_t send_byte(unsigned char input);
+
+/**
  * @brief Clear Sending Buffer
  *
  * Clears the sending buffer.
@@ -144,17 +159,46 @@ void clear_rx_buffer();
  *       Care should be taken to ensure that clearing the buffer at the right time does not lead to data loss
  *       or interfere with the intended operation of the application.
  */
-//void clear_tx_buffer();
-
-uint16_t calculate_checksum();
-uint16_t send_byte(unsigned char input);
 void clear_tx_buffer();
-void PrintTxBuffer();
-unsigned char *returnTxBuffer();
 
-//debug
-void PrintRxBuffer();
-unsigned char *returnRxBuffer();
+/**
+ * @brief Return Transmit Buffer
+ *
+ * Returns the transmit buffer.
+ * This function retrieves the transmit buffer and returns a pointer to it.
+ *
+ * @param buffer Pointer to the buffer where the transmit data is stored.
+ *               This parameter allows the function to access the transmit buffer.
+ *
+ * @return Pointer to the transmit buffer.
+ *
+ * @note This function provides access to the transmit buffer, allowing external entities to inspect or manipulate
+ *       the data before it is transmitted. Care should be taken when accessing and modifying the transmit buffer
+ *       to ensure that it does not interfere with the ongoing transmission process or corrupt the data.
+ *       It's important to handle the transmit buffer with caution to maintain data integrity and avoid race conditions.
+ */
+unsigned char *returnTxBuffer(unsigned char *buffer);
+
+/**
+ * @brief Return Receive Buffer
+ *
+ * Returns the receive buffer.
+ * This function retrieves the receive buffer and returns a pointer to it.
+ *
+ * @param buffer Pointer to the buffer where the receive data is stored.
+ *               This parameter allows the function to access the receive buffer.
+ *
+ * @return Pointer to the receive buffer.
+ *
+ * @note This function provides access to the receive buffer, allowing external entities to inspect or manipulate
+ *       the received data. Care should be taken when accessing and processing the receive buffer to ensure
+ *       that it contains valid and up-to-date data. It's important to handle the receive buffer with caution
+ *       to prevent data loss, buffer overflow, or corruption of the received data. Additionally, any processing
+ *       performed on the receive buffer should be synchronized with the reception process to avoid race conditions
+ *       and ensure data integrity.
+ */
+unsigned char *returnRxBuffer(unsigned char *buffer);
+
 uint16_t send_number(uint16_t number);
 
 /**
@@ -222,15 +266,6 @@ uint16_t send_co2(uint16_t value_co2);
  *
  */
 uint16_t send_last_20_co2levels();
-
-
-/*
- * As mensagens começam por # e acabam em !
- * Depois temos um byte para o comando CMD
- * Depois temos todos os dados necessários para executar os comandos DATA
- * Por fim temos um byte checksum, tem o tamanho de todos os bytes entre
- * o CMD e DATA
- * */
 
 /**
  * @brief Reads a value from all the sensors

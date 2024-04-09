@@ -40,8 +40,3 @@ uint16_t reset_temps() {
 	return SUCCESS;
 }
 
-uint16_t show_temps() {
-	printf("Temps[0]:%d, [1]:%d\n", temps[0], temps[1]);
-	return SUCCESS;
-}
-

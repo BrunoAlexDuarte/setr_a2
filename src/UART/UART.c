@@ -149,27 +149,10 @@ void clear_tx_buffer() {
     return;
 }
 
-//debug
-void PrintRxBuffer() {
-    printf("RxBuffer:");
-    for(uint16_t i = 0; i < rx_occupied_bytes; i++) {
-        printf("%c,", RxBuffer[i]);
-    }
-    printf("\n");
-}
-
 unsigned char *returnRxBuffer(unsigned char *buffer) {
         strncpy(buffer, RxBuffer, rx_occupied_bytes);
         buffer[rx_occupied_bytes] = '\0'; //null-terminate the string;
 	return buffer;
-}
-
-void PrintTxBuffer() {
-    printf("TxBuffer:");
-    for(uint16_t i = 0; i < tx_occupied_bytes; i++) {
-        printf("%c,", TxBuffer[i]);
-    }
-    printf("\n");
 }
 
 unsigned char *returnTxBuffer(unsigned char *buffer) {
