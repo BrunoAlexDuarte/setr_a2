@@ -21,10 +21,9 @@ uint16_t send_last_20_co2levels() {
 	return SUCCESS;
 }
 
-uint16_t read_sensor_co2() {
+uint16_t read_sensor_co2(uint16_t *value) {
 	generate_co2();
-	uint16_t value_co2 = co2levels[co2levels_last];
-	send_co2(value_co2);
+	*value = co2levels[co2levels_last];
 	return SUCCESS;
 }
 

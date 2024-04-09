@@ -20,9 +20,9 @@ uint16_t send_last_20_humidities() {
 	return SUCCESS;
 }
 
-uint16_t read_sensor_humidity() {
+uint16_t read_sensor_humidity(uint16_t *value) {
 	generate_humidity();
-	uint16_t value_humidity = humidities[humidity_last];
+	value = humidities[humidity_last];
 	send_humidity(value_humidity);
 	return SUCCESS;
 }

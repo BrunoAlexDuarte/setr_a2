@@ -20,10 +20,9 @@ uint16_t send_last_20_temps() {
 	return SUCCESS;
 }
 
-uint16_t read_sensor_temp() {
+uint16_t read_sensor_temp(uint16_t *value) {
 	generate_temp();
-	uint16_t value_temp = temps[temp_last];
-	send_temp(value_temp);
+	value = temps[temp_last];
 	return SUCCESS;
 }
 
