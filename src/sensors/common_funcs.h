@@ -9,10 +9,9 @@
 #define SUCCESS 0
 #define NO_SENSOR 1
 #define NOT_TWENTY_ENTRIES 2
+#define VALUE_NOT_AVAILABLE
 
 #define SENSOR_CACHE_SIZE 20
 #define NUM_SAMPLES 40
-
-uint16_t send_number(uint16_t number);
 
 #endif

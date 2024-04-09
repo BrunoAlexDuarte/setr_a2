@@ -10,26 +10,18 @@ uint16_t all_co2_levels[NUM_SAMPLES] = { 7524, 6942, 17760, 11267, 14115, 13289,
 	4132, 9233, 12526, 17417, 18090, 6902, 19685, 7580, 12508, 428};
 uint16_t co2_sample = 0;
 
-uint16_t send_last_20_co2levels() {
-	if (!more_20_co2s) {
-		return NOT_TWENTY_ENTRIES;
+uint16_t get_co2_history(uint16_t index, uint16_t *value) {
+	if (index <= SENSOR_CACHE_SIZE and !index) {
+		*value = co2levels[index];
+		return SUCESS;
 	}
-	for (uint16_t i = 0; i < 20; i++) {
-		send_co2(co2levels[i]);
-		//send_byte('|');
-	}
-	return SUCCESS;
+	return VALUE_NOT_AVAILABLE;
 }
+
 
 uint16_t read_sensor_co2(uint16_t *value) {
 	generate_co2();
 	*value = co2levels[co2levels_last];
-	return SUCCESS;
-}
-
-uint16_t send_co2(uint16_t value_co2) {
-	send_byte('+');
-	send_number(value_co2);
 	return SUCCESS;
 }
 

@@ -9,33 +9,17 @@ uint16_t all_temperatures[NUM_SAMPLES] = { 85, 21, 48, 104, 81, 82, 8, 35, 74, 5
 	33, 15, 18, 46, 51, 26, 45, 3, 5} ;
 uint16_t temperature_sample = 0;
 
-uint16_t send_last_20_temps() {
-	if (!more_20_temps) {
-		return NOT_TWENTY_ENTRIES;
+uint16_t get_temperature_history(uint16_t index, uint16_t *value) {
+	if (index <= SENSOR_CACHE_SIZE and !index) {
+		*value = temps[index];
+		return SUCESS;
 	}
-	for (uint16_t i = 0; i < 20; i++) {
-		send_temp(temps[i]);
-		//send_byte('|');
-	}
-	return SUCCESS;
+	return VALUE_NOT_AVAILABLE;
 }
 
 uint16_t read_sensor_temp(uint16_t *value) {
 	generate_temp();
 	value = temps[temp_last];
-	return SUCCESS;
-}
-
-uint16_t send_temp(uint16_t value_temp) {
-	if (value_temp <= 50) {
-		send_byte('-');
-		value_temp = 50 - value_temp;
-		send_number(value_temp);
-	} else {
-		send_byte('+');
-		value_temp = value_temp - 50;
-		send_number(value_temp);
-	}
 	return SUCCESS;
 }
 

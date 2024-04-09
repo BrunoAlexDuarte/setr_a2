@@ -173,3 +173,107 @@ void PrintTxBuffer() {
 unsigned char *returnTxBuffer() {
 	return TxBuffer;
 }
+
+
+/*
+ * Send number
+ * */
+
+uint16_t send_number(uint16_t number) {
+	
+	if (!number) { //Verificar se o número não é zero
+		send_byte('0');
+		return SUCCESS;
+	}
+
+	uint16_t i = 10000; //Para a div_int o máximo que precisaremos é 10k
+
+	while (number / i == 0) i /= 10; //Caso 10k seka muito grande, adequamos
+	do {
+		send_byte((unsigned char) (number / i) + '0');
+		number %= i;
+	} while(i=i/10) ;  //Fazemos até chegarmos à casa das unidades
+
+	return SUCCESS;
+}
+
+/*
+ * Module to send the temperature
+ * */
+
+uint16_t send_temp(uint16_t value_temp) {
+	if (value_temp <= 50) {
+		send_byte('-');
+		value_temp = 50 - value_temp;
+		send_number(value_temp);
+	} else {
+		send_byte('+');
+		value_temp = value_temp - 50;
+		send_number(value_temp);
+	}
+	return SUCCESS;
+}
+
+uint16_t send_last_20_temps() {
+	if (!check_temps()) {
+		return NOT_TWENTY_ENTRIES;
+	}
+	uint16_t value = 0;
+	for (uint16_t i = 0; i < 20; i++) {
+		get_temperature_history(i, &value);
+		send_temp(value);
+	}
+	return SUCCESS;
+}
+
+
+/*
+ * Module to send the temperature
+ * */
+
+uint16_t send_humidity(uint16_t value_humidity) {
+	send_byte('+');
+	send_number(value_humidity);
+	return SUCCESS;
+}
+
+uint16_t send_last_20_humidities() {
+	if (!check_humidities()) {
+		return NOT_TWENTY_ENTRIES;
+	}
+	uint16_t value = 0;
+	for (uint16_t i = 0; i < 20; i++) {
+		get_humidity_history(i, &value);
+		send_humidity(value);
+	}
+	return SUCCESS;
+}
+
+/*
+ * Module to send co2
+ * */
+
+uint16_t send_co2(uint16_t value_co2) {
+	send_byte('+');
+	send_number(value_co2);
+	return SUCCESS;
+}
+
+uint16_t send_last_20_co2levels() {
+	if (!check_co2levels()) {
+		return NOT_TWENTY_ENTRIES;
+	}
+	uint16_t value = 0;
+	for (uint16_t i = 0; i < 20; i++) {
+		get_co2_history(i, &value);
+		send_co2(value);
+	}
+	return SUCCESS;
+}
+
+
+
+
+
+
+
