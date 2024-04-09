@@ -2,19 +2,20 @@
 #include "../src/UART/UART.h"
 
 void test_uart_in_buffer(void) {
+    unsigned char buffer[BUFFER_SIZE+1];
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, receive_byte('#'));
-    TEST_ASSERT_EQUAL_CHAR('#', returnRxBuffer()[0]);
+    TEST_ASSERT_EQUAL_CHAR('#', returnRxBuffer(buffer)[0]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, receive_byte('A'));
-    TEST_ASSERT_EQUAL_CHAR('A', returnRxBuffer()[1]);
+    TEST_ASSERT_EQUAL_CHAR('A', returnRxBuffer(buffer)[1]);
     TEST_ASSERT_EQUAL_UINT16(INVALID_COMMAND, receive_byte('!'));
     receive_byte('#');
     receive_byte('A');
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, receive_byte('0'));
-    TEST_ASSERT_EQUAL_CHAR('0', returnRxBuffer()[2]);
+    TEST_ASSERT_EQUAL_CHAR('0', returnRxBuffer(buffer)[2]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, receive_byte('6'));
-    TEST_ASSERT_EQUAL_CHAR('6', returnRxBuffer()[3]);
+    TEST_ASSERT_EQUAL_CHAR('6', returnRxBuffer(buffer)[3]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, receive_byte('5'));
-    TEST_ASSERT_EQUAL_CHAR('5', returnRxBuffer()[4]);
+    TEST_ASSERT_EQUAL_CHAR('5', returnRxBuffer(buffer)[4]);
     TEST_ASSERT_EQUAL_UINT16(SUCCESS, receive_byte('!'));
 }
 
@@ -53,26 +54,27 @@ void test_uart_in_validate_checksum(void) {
 }
 
 void test_uart_out_buffer(void) {
+    unsigned char buffer[BUFFER_SIZE+1];
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('#'));
-    TEST_ASSERT_EQUAL_CHAR('#', returnTxBuffer()[0]);
+    TEST_ASSERT_EQUAL_CHAR('#', returnTxBuffer(buffer)[0]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('P'));
-    TEST_ASSERT_EQUAL_CHAR('P', returnTxBuffer()[1]);
+    TEST_ASSERT_EQUAL_CHAR('P', returnTxBuffer(buffer)[1]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('T'));
-    TEST_ASSERT_EQUAL_CHAR('T', returnTxBuffer()[2]);
+    TEST_ASSERT_EQUAL_CHAR('T', returnTxBuffer(buffer)[2]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('1'));
-    TEST_ASSERT_EQUAL_CHAR('1', returnTxBuffer()[3]);
+    TEST_ASSERT_EQUAL_CHAR('1', returnTxBuffer(buffer)[3]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('5'));
-    TEST_ASSERT_EQUAL_CHAR('5', returnTxBuffer()[4]);
+    TEST_ASSERT_EQUAL_CHAR('5', returnTxBuffer(buffer)[4]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('|'));
-    TEST_ASSERT_EQUAL_CHAR('|', returnTxBuffer()[5]);
+    TEST_ASSERT_EQUAL_CHAR('|', returnTxBuffer(buffer)[5]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('0'));
-    TEST_ASSERT_EQUAL_CHAR('0', returnTxBuffer()[6]);
+    TEST_ASSERT_EQUAL_CHAR('0', returnTxBuffer(buffer)[6]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('1'));
-    TEST_ASSERT_EQUAL_CHAR('1', returnTxBuffer()[7]);
+    TEST_ASSERT_EQUAL_CHAR('1', returnTxBuffer(buffer)[7]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('0'));
-    TEST_ASSERT_EQUAL_CHAR('0', returnTxBuffer()[8]);
+    TEST_ASSERT_EQUAL_CHAR('0', returnTxBuffer(buffer)[8]);
     TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('!'));
-    TEST_ASSERT_EQUAL_CHAR('!', returnTxBuffer()[9]);
+    TEST_ASSERT_EQUAL_CHAR('!', returnTxBuffer(buffer)[9]);
 }
 
 void test_uart_out_calculate_checksum(void) {

@@ -96,5 +96,6 @@ void test_temps(void) {
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	res = receive_byte('!');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PT+35|231!", returnTxBuffer());
+	unsigned char buffer[BUFFER_SIZE+1];
+	TEST_ASSERT_EQUAL_STRING("#PT-21|052!", returnTxBuffer(buffer));
 }

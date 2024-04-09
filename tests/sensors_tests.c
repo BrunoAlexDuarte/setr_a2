@@ -14,40 +14,42 @@ void test_generate_all(void) {
 void test_generate_2_temps(void) {
 
 	int res = 0;
+	unsigned char buffer[BUFFER_SIZE+1];
 	res = read_value_sensor('T');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	printf("CHEGOU\n");
-	TEST_ASSERT_EQUAL_STRING("#PT+35|231!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PT+35|055!", returnTxBuffer(buffer));
 
 	res = read_value_sensor('T');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PT-29|236!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PT-29|060!", returnTxBuffer(buffer));
 }
 
 void test_generate_2_humidities(void) {
 
 	int res = 0;
+	unsigned char buffer[BUFFER_SIZE+1];
 
 	res = read_value_sensor('H');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PH+64|221!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PH+64|045!", returnTxBuffer(buffer));
 
 	res = read_value_sensor('H');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PH+78|226!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PH+78|050!", returnTxBuffer(buffer));
 }
 
 void test_generate_2_co2levels(void) {
 
 	int res = 0;
+	unsigned char buffer[BUFFER_SIZE+1];
 
 	res = read_value_sensor('C');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PC+7524|64!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PC+7524|144!", returnTxBuffer(buffer));
 
 	res = read_value_sensor('C');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
-	TEST_ASSERT_EQUAL_STRING("#PC+6942|67!", returnTxBuffer());
+	TEST_ASSERT_EQUAL_STRING("#PC+6942|147!", returnTxBuffer(buffer));
 }
 
 void test_send_number(void) {

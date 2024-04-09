@@ -158,8 +158,10 @@ void PrintRxBuffer() {
     printf("\n");
 }
 
-unsigned char *returnRxBuffer() {
-	return RxBuffer;
+unsigned char *returnRxBuffer(unsigned char *buffer) {
+        strncpy(buffer, RxBuffer, rx_occupied_bytes);
+        buffer[rx_occupied_bytes] = '\0'; //null-terminate the string;
+	return buffer;
 }
 
 void PrintTxBuffer() {
@@ -170,8 +172,10 @@ void PrintTxBuffer() {
     printf("\n");
 }
 
-unsigned char *returnTxBuffer() {
-	return TxBuffer;
+unsigned char *returnTxBuffer(unsigned char *buffer) {
+        strncpy(buffer, TxBuffer, tx_occupied_bytes);
+        buffer[tx_occupied_bytes] = '\0'; //null-terminate the string;
+	return buffer;
 }
 
 /*
@@ -186,15 +190,17 @@ uint16_t read_value_sensor_all() {
 	//Sends values by order (temperature, humidity, CO2)
 	uint16_t value = 0;
 	read_sensor_temp(&value);
-	send_number(value);
+	send_temp(value);
 	send_byte('>');
 	read_sensor_humidity(&value);
-	send_number(value);
+	send_humidity(value);
 	send_byte('>');
 	read_sensor_co2(&value);
-	send_number(value);
+	send_co2(value);
 	uint16_t checksum = calculate_checksum();
 	send_byte('|');
+	if (checksum < 100) send_byte('0');
+	if (checksum < 10) send_byte('0');
 	send_number(checksum);
 	send_byte('!');
 
@@ -208,11 +214,12 @@ uint16_t read_value_sensor(unsigned char sensor) {
 		send_byte('#');
 		send_byte('P');
 		send_byte('T');
-		printf("CHEGOU2\n");
 		read_sensor_temp(&value);
-		send_number(value);
+		send_temp(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
@@ -222,9 +229,11 @@ uint16_t read_value_sensor(unsigned char sensor) {
 		send_byte('P');
 		send_byte('H');
 		read_sensor_humidity(&value);
-		send_number(value);
+		send_humidity(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
@@ -234,9 +243,11 @@ uint16_t read_value_sensor(unsigned char sensor) {
 		send_byte('P');
 		send_byte('C');
 		read_sensor_co2(&value);
-		send_number(value);
+		send_co2(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
@@ -256,6 +267,8 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_last_20_temps();
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'H') {
@@ -266,6 +279,8 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_last_20_humidities();
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 	} else if (sensor == 'C') {
@@ -276,6 +291,8 @@ uint16_t send_last_20_samples(unsigned char sensor) {
 		send_last_20_co2levels();
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 	} else return NO_SENSOR;
@@ -296,6 +313,8 @@ uint16_t send_last_20_samples_all() {
 		send_last_20_co2levels();
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
+		if (checksum < 100) send_byte('0');
+		if (checksum < 10) send_byte('0');
 		send_number(checksum);
 		send_byte('!');
 		return SUCCESS;
