@@ -26,19 +26,8 @@ uint16_t send_byte(unsigned char input) {
             char command[tx_occupied_bytes+1];
             strncpy(command, TxBuffer, tx_occupied_bytes);
             command[tx_occupied_bytes] = '\0'; //null-terminate the string;
-            /*if(validate_command(command)==0) { // talvez nao seja preciso fazer o checksum (?)
-                switch(command[1]) {
-                    case 'X':
-                        printf("TO DO\n");
-                        break;
-                    default:
-                        return INVALID_COMMAND;
-                }
-                clear_tx_buffer();
-        	return FULL_COMMAND_RECEIVED;
-            }*/
-            /*clear_tx_buffer();
-            return INVALID_COMMAND;*/
+            printf("Full command sent: %s", command);
+            return FULL_COMMAND_SENT
         }
         return BYTE_ADDED_TO_BUFFER;
     }
@@ -61,6 +50,9 @@ void PrintTxBuffer() {
 }
 
 unsigned char *returnTxBuffer() {
-	return TxBuffer;
+    char command[tx_occupied_bytes+1];
+    strncpy(command, TxBuffer, tx_occupied_bytes);
+    command[tx_occupied_bytes] = '\0'; //null-terminate the string;
+	return command;
 }
 

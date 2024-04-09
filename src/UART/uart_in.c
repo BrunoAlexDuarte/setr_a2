@@ -4,7 +4,7 @@ static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
 
 static regex_t regex;
-static char* command_pattern = "^#[APLR].*(2[5][0-5]|2[0-4][0-9]|[0-1][0-9]{2})!$";
+static char* command_pattern = "^#(A|P[THC]|L|L[THC]|R|R[THC])(2[5][0-5]|2[0-4][0-9]|[0-1][0-9]{2})!$";
 
 uint16_t check_sensor_identifier(unsigned char c) {
 	return c == 'T' || c == 'H' || c == 'C';
@@ -28,13 +28,13 @@ uint16_t receive_byte(unsigned char input) {
             if(validate_command(command)==0 && validate_checksum(command, rx_occupied_bytes)==0) {
                 switch(command[1]) {
                     case 'A':
-			return read_value_sensor_all();
+			            return read_value_sensor_all();
                         break;
                     case 'P':
                         if(!check_sensor_identifier(command[2])) {
                             return UNKNOWN_SENSOR;
                         }
-			return read_value_sensor(command[2]);
+			            return read_value_sensor(command[2]);
                         break;
                     case 'L':
                         if(!check_sensor_identifier(command[2])) return send_last_20_samples_all();
@@ -123,5 +123,8 @@ void PrintRxBuffer() {
 }
 
 unsigned char *returnRxBuffer() {
-	return RxBuffer;
+    char command[rx_occupied_bytes+1];
+    strncpy(command, RxBuffer, rx_occupied_bytes);
+    command[rx_occupied_bytes] = '\0'; //null-terminate the string;
+	return command;
 }
