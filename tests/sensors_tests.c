@@ -1,12 +1,7 @@
 
 #include "../unity_src/unity.h"
-#include "../src/UART/uart_in.h"
-#include "../src/UART/uart_out.h"
+#include "../src/UART/UART.h"
 #include "../src/sensors/smart_sensor.h"
-
-void setUp(void) {}
-
-void tearDown(void) {}
 
 void test_generate_all(void) {
 	int res = 0;
@@ -138,22 +133,5 @@ void test_get_20_co2(void) {
 
 	res = send_last_20_co2levels();
 	TEST_ASSERT_EQUAL_HEX8(2, res);
-}
-int main(void) {
-
-	printf("Begin tests\n");
-
-	UNITY_BEGIN();
-	RUN_TEST(test_generate_2_temps);
-	RUN_TEST(test_generate_2_humidities);
-	RUN_TEST(test_generate_2_co2levels);
-	RUN_TEST(test_generate_all);
-	//RUN_TEST(test_send_number);
-	RUN_TEST(test_get_20_temps);
-	RUN_TEST(test_get_20_humidities);
-	RUN_TEST(test_get_20_co2);
-
-
-	return 0;
 }
 

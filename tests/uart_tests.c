@@ -76,5 +76,11 @@ void test_uart_out_buffer(void) {
 }
 
 void test_uart_out_calculate_checksum(void) {
-    TEST_ASSERT_EQUAL_UINT16(BYTE_ADDED_TO_BUFFER, send_byte('#'));
+    clear_tx_buffer();
+    send_byte('#'); send_byte('P');
+    TEST_ASSERT_EQUAL_UINT16(80, calculate_checksum());
+    send_byte('T'); send_byte('1');
+    TEST_ASSERT_EQUAL_UINT16(213, calculate_checksum());
+    send_byte('5');
+    TEST_ASSERT_EQUAL_UINT16(10, calculate_checksum());
 }

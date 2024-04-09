@@ -110,12 +110,9 @@ uint16_t validate_checksum(char *command, uint16_t rx_occupied_bytes) {
 
 uint16_t calculate_checksum() {
 	uint16_t sum = 0;
-	for(uint16_t i = 2; i < tx_occupied_bytes; i++) {
+	for(uint16_t i = 1; i < tx_occupied_bytes; i++) {
 		sum = (sum + TxBuffer[i]) % 256;
 	}
-    if(sum < 100) {
-        send_byte('0');
-    }
 	return sum;
 }
 

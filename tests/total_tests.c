@@ -1,12 +1,7 @@
 
 #include "../unity_src/unity.h"
-#include "../src/UART/uart_in.h"
-#include "../src/UART/uart_out.h"
+#include "../src/UART/UART.h"
 #include "../src/sensors/smart_sensor.h"
-
-void setUp(void) {}
-
-void tearDown(void) {}
 
 void test_total_get_20_and_reset_temps(void) {
 	int res = 0;
@@ -104,19 +99,3 @@ void test_temps(void) {
 	TEST_ASSERT_EQUAL_HEX8(0, res);
 	TEST_ASSERT_EQUAL_STRING("#PT+35|231!", returnTxBuffer());
 }
-
-
-
-int main(void) {
-
-	printf("Begin tests\n");
-
-	UNITY_BEGIN();
-
-	RUN_TEST(test_temps);
-	RUN_TEST(test_total_get_20_and_reset_temps);
-
-
-	return 0;
-}
-
