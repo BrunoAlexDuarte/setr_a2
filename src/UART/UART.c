@@ -1,8 +1,9 @@
-#include "uart_in.h"
+#include "UART.h"
 
 static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
-
+static unsigned char TxBuffer[BUFFER_SIZE];
+static uint16_t tx_occupied_bytes = 0;
 static regex_t regex;
 static char* command_pattern = "^#(A|P[THC]|L|L[THC]|R|R[THC])(2[5][0-5]|2[0-4][0-9]|[0-1][0-9]{2})!$";
 
@@ -107,9 +108,47 @@ uint16_t validate_checksum(char *command, uint16_t rx_occupied_bytes) {
 
 }
 
+uint16_t calculate_checksum() {
+	uint16_t sum = 0;
+	for(uint16_t i = 2; i < tx_occupied_bytes; i++) {
+		sum = (sum + TxBuffer[i]) % 256;
+	}
+    if(sum < 100) {
+        send_byte('0');
+    }
+	return sum;
+}
+
+uint16_t send_byte(unsigned char input) {
+
+    if(tx_occupied_bytes < BUFFER_SIZE) {
+
+        if(input == SOF_SYM) {
+            clear_tx_buffer();
+        }
+        TxBuffer[tx_occupied_bytes] = input;
+        tx_occupied_bytes++;
+        if(input == EOF_SYM) {
+            //get command in buffer
+            char command[tx_occupied_bytes+1];
+            strncpy(command, TxBuffer, tx_occupied_bytes);
+            command[tx_occupied_bytes] = '\0'; //null-terminate the string;
+            printf("Full command sent: %s\n", command);
+            return FULL_COMMAND_SENT;
+        }
+        return BYTE_ADDED_TO_BUFFER;
+    }
+    clear_tx_buffer();
+    return send_byte(input);
+}
 
 void clear_rx_buffer() {
     rx_occupied_bytes = 0;
+    return;
+}
+
+void clear_tx_buffer() {
+    tx_occupied_bytes = 0;
     return;
 }
 
@@ -123,8 +162,17 @@ void PrintRxBuffer() {
 }
 
 unsigned char *returnRxBuffer() {
-    char command[rx_occupied_bytes+1];
-    strncpy(command, RxBuffer, rx_occupied_bytes);
-    command[rx_occupied_bytes] = '\0'; //null-terminate the string;
-	return command;
+	return RxBuffer;
+}
+
+void PrintTxBuffer() {
+    printf("TxBuffer:");
+    for(uint16_t i = 0; i < tx_occupied_bytes; i++) {
+        printf("%c,", TxBuffer[i]);
+    }
+    printf("\n");
+}
+
+unsigned char *returnTxBuffer() {
+	return TxBuffer;
 }

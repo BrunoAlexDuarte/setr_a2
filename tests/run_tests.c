@@ -17,8 +17,9 @@ int main(void) {
     UNITY_BEGIN();
 
     RUN_TEST(test_uart_in_buffer);
-    RUN_TEST(test_uart_in_valite_cmd);
+    RUN_TEST(test_uart_in_validate_cmd);
     RUN_TEST(test_uart_in_validate_checksum);
+    RUN_TEST(test_uart_out_buffer);
 
     UNITY_END();
 
