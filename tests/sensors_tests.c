@@ -16,6 +16,7 @@ void test_generate_2_temps(void) {
 	int res = 0;
 	res = read_value_sensor('T');
 	TEST_ASSERT_EQUAL_HEX8(0, res);
+	printf("CHEGOU\n");
 	TEST_ASSERT_EQUAL_STRING("#PT+35|231!", returnTxBuffer());
 
 	res = read_value_sensor('T');

@@ -184,11 +184,15 @@ uint16_t read_value_sensor_all() {
 	send_byte('A');
 	send_byte('R');
 	//Sends values by order (temperature, humidity, CO2)
-	read_sensor_temp();
+	uint16_t value = 0;
+	read_sensor_temp(&value);
+	send_number(value);
 	send_byte('>');
-	read_sensor_humidity();
+	read_sensor_humidity(&value);
+	send_number(value);
 	send_byte('>');
-	read_sensor_co2();
+	read_sensor_co2(&value);
+	send_number(value);
 	uint16_t checksum = calculate_checksum();
 	send_byte('|');
 	send_number(checksum);
@@ -198,12 +202,15 @@ uint16_t read_value_sensor_all() {
 }
 
 uint16_t read_value_sensor(unsigned char sensor) {
+	uint16_t value = 0;
 	
 	if (sensor == 'T') {
 		send_byte('#');
 		send_byte('P');
 		send_byte('T');
-		read_sensor_temp();
+		printf("CHEGOU2\n");
+		read_sensor_temp(&value);
+		send_number(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
 		send_number(checksum);
@@ -214,7 +221,8 @@ uint16_t read_value_sensor(unsigned char sensor) {
 		send_byte('#');
 		send_byte('P');
 		send_byte('H');
-		read_sensor_humidity();
+		read_sensor_humidity(&value);
+		send_number(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
 		send_number(checksum);
@@ -225,7 +233,8 @@ uint16_t read_value_sensor(unsigned char sensor) {
 		send_byte('#');
 		send_byte('P');
 		send_byte('C');
-		read_sensor_co2();
+		read_sensor_co2(&value);
+		send_number(value);
 		uint16_t checksum = calculate_checksum();
 		send_byte('|');
 		send_number(checksum);
