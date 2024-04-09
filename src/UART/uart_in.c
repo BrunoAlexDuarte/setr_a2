@@ -4,7 +4,7 @@ static unsigned char RxBuffer[BUFFER_SIZE];
 static uint16_t rx_occupied_bytes = 0;
 
 static regex_t regex;
-static char* command_pattern = "^#[APLR].*(2[0-5][0-9]|[0-1][0-9]{2})!$";
+static char* command_pattern = "^#[APLR].*(2[5][0-5]|2[0-4][0-9]|[0-1][0-9]{2})!$";
 
 uint16_t check_sensor_identifier(unsigned char c) {
 	return c == 'T' || c == 'H' || c == 'C';
@@ -25,7 +25,7 @@ uint16_t receive_byte(unsigned char input) {
             char command[rx_occupied_bytes+1];
             strncpy(command, RxBuffer, rx_occupied_bytes);
             command[rx_occupied_bytes] = '\0'; //null-terminate the string;
-            if(validate_command(command)==0 && validate_checksum(command)==0) {
+            if(validate_command(command)==0 && validate_checksum(command, rx_occupied_bytes)==0) {
                 switch(command[1]) {
                     case 'A':
 			            read_value_sensor_all();
@@ -56,8 +56,7 @@ uint16_t receive_byte(unsigned char input) {
         return BYTE_ADDED_TO_BUFFER;
     }
     clear_rx_buffer();
-    receive_byte(input);
-    return BYTE_ADDED_TO_BUFFER;
+    return receive_byte(input);
 }
 
 
@@ -78,7 +77,7 @@ uint16_t validate_command(char *command) {
 
 }
 
-uint16_t validate_checksum(char *command) {
+uint16_t validate_checksum(char *command, uint16_t rx_occupied_bytes) {
     
     uint16_t start_commandsum = 1;
     uint16_t end_commandsum = rx_occupied_bytes - 5;
@@ -88,12 +87,13 @@ uint16_t validate_checksum(char *command) {
     uint16_t checksum = 0;
     uint16_t i = start_checksum;
     uint16_t multiplier = 100;
+    
     while(i <= end_checksum) {
         checksum = checksum + multiplier * (command[i] - '0');
         i++;
         multiplier /= 10;
     }
-
+    
     uint16_t commandsum = 0;
     for(i = start_commandsum; i <= end_commandsum; i++) {
         commandsum += command[i];

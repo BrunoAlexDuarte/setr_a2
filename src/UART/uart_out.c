@@ -43,7 +43,7 @@ uint16_t send_byte(unsigned char input) {
         return BYTE_ADDED_TO_BUFFER;
     }
     clear_tx_buffer();
-    send_byte(input);
+    return send_byte(input);
 }
 
 void clear_tx_buffer() {

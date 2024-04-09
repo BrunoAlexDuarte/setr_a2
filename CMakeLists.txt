@@ -34,9 +34,10 @@ endif()
 add_subdirectory(src/sensors)
 add_subdirectory(src/UART)
 add_subdirectory(unity_src)
+add_subdirectory(tests)
 
 # Generate executable "libdemo" from source file "main.c"
-add_executable(run_tests tests/testes.c)
+add_executable(run_tests tests/run_tests.c)
 
 # Generate variables with set of libs and include folders
 # Dependencies for libraries files are automatically set 
@@ -49,6 +50,9 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/src/UART")
 
 list(APPEND EXTRA_LIBS UnityLib)
 list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/unity_src")
+
+list(APPEND EXTRA_LIBS TestsLib)
+list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/tests")
 
 # Specify libraries or flags to use when linking a given target 
 # and/or its dependents

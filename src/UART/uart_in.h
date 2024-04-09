@@ -95,8 +95,7 @@ uint16_t validate_command(char *command);
  *       It's essential to ensure that the checksum algorithm and validation logic align with the protocol requirements
  *       and the specific checksum calculation method used by the sender.
  */
-uint16_t validate_checksum(char *command);
-uint16_t validate_checksum2(char *command);
+uint16_t validate_checksum(char *command, uint16_t rx_occupied_bytes);
 
 /**
  * @brief Clear Receive Buffer
