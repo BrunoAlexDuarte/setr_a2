@@ -53,7 +53,6 @@ void clear_tx_buffer() {
 
 //debug
 void PrintTxBuffer() {
-	printf("Occupied_bytes:%d\n", tx_occupied_bytes);
     printf("TxBuffer:");
     for(uint16_t i = 0; i < tx_occupied_bytes; i++) {
         printf("%c,", TxBuffer[i]);
