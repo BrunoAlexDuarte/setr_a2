@@ -1,7 +1,7 @@
 /** 
  * @file temperature.h
  * @brief This file contains the functions relative to the temperature sensor
- * all the responses will be in ascii.
+ * All the responses will be in ASCII.
  *
  * @author bruno duarte
  *

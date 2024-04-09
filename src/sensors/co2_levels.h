@@ -1,7 +1,7 @@
 /** 
- * @file CO2 levels.h
- * @brief This file contains the functions relative to the CO2 levels sensor
- * all the responses will be in ascii.
+ * @file co2_levels.h
+ * @brief This file contains the functions relative to the CO2 sensor
+ * All the responses will be in ASCII.
  *
  * @author bruno duarte
  *
