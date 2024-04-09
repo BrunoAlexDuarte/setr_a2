@@ -91,6 +91,16 @@ void test_get_20_temps(void) {
 
 	res = send_last_20_temps();
 	TEST_ASSERT_EQUAL_HEX8(2, res);
+
+	for (int i = 0; i < 220; i++) {
+		generate_temp();
+	}
+	res = send_last_20_temps();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
+
+	res = reset_temps();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
+
 }
 
 void test_get_20_humidities(void) {
@@ -111,6 +121,15 @@ void test_get_20_humidities(void) {
 
 	res = send_last_20_humidities();
 	TEST_ASSERT_EQUAL_HEX8(2, res);
+
+	for (int i = 0; i < 220; i++) {
+		generate_humidity();
+	}
+	res = send_last_20_humidities();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
+
+	res = reset_humidities();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
 }
 
 void test_get_20_co2(void) {
@@ -131,5 +150,14 @@ void test_get_20_co2(void) {
 
 	res = send_last_20_co2levels();
 	TEST_ASSERT_EQUAL_HEX8(2, res);
+
+	for (int i = 0; i < 220; i++) {
+		generate_co2();
+	}
+	res = send_last_20_co2levels();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
+	
+	res = reset_co2levels();
+	TEST_ASSERT_EQUAL_HEX8(0, res);
 }
 

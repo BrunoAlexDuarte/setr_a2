@@ -8,7 +8,7 @@ static regex_t regex;
 static char* command_pattern = "^#(A|P[THC]|L|L[THC]|R|R[THC])(2[5][0-5]|2[0-4][0-9]|[0-1][0-9]{2})!$";
 
 uint16_t check_sensor_identifier(unsigned char c) {
-	return c == 'T' || c == 'H' || c == 'C';
+	return (c == 'T') || (c == 'H') || (c == 'C');
 }
 
 uint16_t receive_byte(unsigned char input) {
@@ -32,7 +32,9 @@ uint16_t receive_byte(unsigned char input) {
 			            return read_value_sensor_all();
                         break;
                     case 'P':
+			printf("SENSORE:%d with %c\n", check_sensor_identifier(command[2]), command[2]);
                         if(!check_sensor_identifier(command[2])) {
+				printf("\t\tFALHOW\n");
                             return UNKNOWN_SENSOR;
                         }
 			            return read_value_sensor(command[2]);

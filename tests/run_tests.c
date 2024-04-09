@@ -33,7 +33,7 @@ int main(void) {
     RUN_TEST(test_uart_out_calculate_checksum);
 
     RUN_TEST(test_temps);
-	RUN_TEST(test_total_get_20_and_reset_temps);
+    RUN_TEST(test_total_get_20_and_reset_temps);
     UNITY_END();
 
     return 0;

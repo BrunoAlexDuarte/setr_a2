@@ -10,7 +10,7 @@ uint16_t all_humidities[NUM_SAMPLES] = { 64, 78, 50, 87, 62, 91, 23, 98, 41, 33,
 uint16_t humitidty_sample = 0;
 
 uint16_t get_humidity_history(uint16_t index, uint16_t *value) {
-	if (index <= SENSOR_CACHE_SIZE && !index) {
+	if (index <= SENSOR_CACHE_SIZE && index) {
 		*value = humidities[index];
 		return SUCCESS;
 	}

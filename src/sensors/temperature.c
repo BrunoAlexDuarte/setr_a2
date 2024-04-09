@@ -10,7 +10,7 @@ uint16_t all_temperatures[NUM_SAMPLES] = { 85, 21, 48, 104, 81, 82, 8, 35, 74, 5
 uint16_t temperature_sample = 0;
 
 uint16_t get_temperature_history(uint16_t index, uint16_t *value) {
-	if (index <= SENSOR_CACHE_SIZE && !index) {
+	if (index <= SENSOR_CACHE_SIZE && index) {
 		*value = temps[index];
 		return SUCCESS;
 	}

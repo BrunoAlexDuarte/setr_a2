@@ -11,7 +11,7 @@ uint16_t all_co2_levels[NUM_SAMPLES] = { 7524, 6942, 17760, 11267, 14115, 13289,
 uint16_t co2_sample = 0;
 
 uint16_t get_co2_history(uint16_t index, uint16_t *value) {
-	if (index <= SENSOR_CACHE_SIZE && !index) {
+	if (index <= SENSOR_CACHE_SIZE && index) {
 		*value = co2levels[index];
 		return SUCCESS;
 	}
